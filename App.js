@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-import {pushNotifications} from './services';
+import {pushNotifications} from './src/services';
 
 pushNotifications.configure();
 pushNotifications.register();
