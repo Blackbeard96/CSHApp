@@ -9,8 +9,13 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Image,
+  TouchableHighlight,
+  Button,
+  TextInput,
 } from 'react-native';
+
 
 import {pushNotifications} from './src/services';
 
@@ -29,18 +34,34 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+
+
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        
+       
+        
+        <Image
+          source={require('./CSHLogo.png')}
+          style={styles.bkg}
+        />
+
+
+        <View style={styles.menuBar}>
+
+          <Button className = "menuBox" title = {"ProfileImage"} style={styles.profile}/>
+
+
+          <Button className = "menuBox" title = {"GameImage"} style={styles.game}/>
+
+          <Button className = "menuBox" title = {"InfoImage"} style={styles.info}/>
+
+           
+       </View>
+
+
       </View>
     );
   }
@@ -51,16 +72,35 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    width: '100%',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
+    margin: 10
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+
+  bkg:{
+    flex: 1,
+    position: 'absolute',
+    
+    height: '30%',
+    width: '30%',
+    opacity: 0.2,
+
   },
+
+  menuBar:{
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+
+    borderRadius: 1,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+  }
+
 });
