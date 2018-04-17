@@ -23,31 +23,16 @@ pushNotifications.configure();
 pushNotifications.register();
 
 
-
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
 type Props = {};
 export default class App extends Component<Props> {
-
-
 
   render() {
     return (
       <View style={styles.container}>
-        
-       
-        
         <Image
-          source={require('./CSHLogo.png')}
+          source={require('./src/components/imgs/CSHLogo.png')}
           style={styles.bkg}
         />
-
 
         <View style={styles.menuBar}>
 
@@ -58,7 +43,7 @@ export default class App extends Component<Props> {
 
           <Button className = "menuBox" title = {"InfoImage"} style={styles.info}/>
 
-           
+
        </View>
 
 
@@ -73,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    width: '100%',
+    // width: '100%',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
@@ -83,12 +68,12 @@ const styles = StyleSheet.create({
   },
 
   bkg:{
-    flex: 1,
+    // flex: 1,
     position: 'absolute',
-    
-    height: '30%',
-    width: '30%',
+    height: '100%',
+    width: '100%',
     opacity: 0.2,
+    resizeMode: 'contain'
 
   },
 
