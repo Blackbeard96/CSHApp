@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 
 
-import {pushNotifications} from './src/services';
+import {pushNotifications} from './services';
 
 pushNotifications.configure();
 pushNotifications.register();
@@ -30,7 +30,7 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <Image
-          source={require('./src/components/imgs/CSHLogo.png')}
+          source={require('./components/imgs/CSHLogo.png')}
           style={styles.bkg}
         />
 
