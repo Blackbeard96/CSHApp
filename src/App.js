@@ -36,12 +36,12 @@ export default class App extends Component<Props> {
 
         <View style={styles.menuBar}>
 
-          <Button className = "menuBox" title = {"ProfileImage"} style={styles.profile}/>
+          <Button className = "menuBox" title = {"ProfileImage"} onPress={()=>{}} style={styles.profile}/>
 
 
-          <Button className = "menuBox" title = {"GameImage"} style={styles.game}/>
+          <Button className = "menuBox" title = {"GameImage"} onPress={()=>{}} style={styles.game}/>
 
-          <Button className = "menuBox" title = {"InfoImage"} style={styles.info}/>
+          <Button className = "menuBox" title = {"InfoImage"} onPress={()=>{}} style={styles.info}/>
 
 
        </View>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    // backgroundColor: '#FFFFFF',
     // width: '100%',
     backgroundColor: '#F5FCFF',
   },
