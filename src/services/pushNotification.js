@@ -1,6 +1,7 @@
 import PushNotification from 'react-native-push-notification';
 import PushNotificationAndroid from 'react-native-push-notification';
 import {PushNotificationIOS, DeviceEventEmitter} from 'react-native';
+import {androidGCM} from '../../secrets.js';
 
 const configure = () => {
   PushNotification.configure({
@@ -16,7 +17,7 @@ const configure = () => {
         notification.finish(PushNotificationIOS.FetchResult.NoData);
     },
     // ANDROID ONLY: GCM Sender ID (optional - not required for local notifications, but is need to receive remote push notifications)
-    senderID: "YOUR GCM SENDER ID",
+    senderID: androidGCM,
     // IOS ONLY (optional): default: all - Permissions to register.
     permissions: {
         alert: true,
@@ -59,15 +60,15 @@ const scheduleNotification = ({bigText, title, message, date, actions}) => {
 };
 
 
-const register = () => {}
+const register = () => {};
 (function() {
   // Register all the valid actions for notifications here and add the action handler for each action
   PushNotificationAndroid.registerNotificationActions(['ActionTitle']);
   DeviceEventEmitter.addListener('notificationActionReceived', function(e){
-    console.log ('notificationActionReceived event received: ' + e);
+    console.log('notificationActionReceived event received: ' + e);
     const info = JSON.parse(e.dataJSON);
     if (info.action == 'ActionTitle') {
-      console.log("completing a notification action ");
+      console.log('completing a notification action ');
       //Do Something
     }
   });
