@@ -13,7 +13,7 @@ import firebase from 'firebase';
 import {firebaseData} from '../secrets';
 
 import {pushNotifications} from './services';
-import LoginForm from './components/LoginForm';
+import Auth from './components/Auth';
 
 pushNotifications.configure();
 pushNotifications.register();
@@ -27,7 +27,7 @@ export default class App extends Component {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
         <Provider store={store}>
-        <LoginForm />
+        <Auth rat={'rat'}/>
         </Provider>
     )
   }

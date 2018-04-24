@@ -1,20 +1,30 @@
-import {LOGIN_ATTEMPT, LOGOUT, SUCCESSFUL_LOGIN} from './types';
+import {LOGIN_ATTEMPT, LOGOUT, SUCCESSFUL_LOGIN, EDIT_FORM, LOGIN_FAIL} from './types';
 import firebase from 'firebase';
 
-const login = user => ({type: SUCCESSFUL_LOGIN, user});
+const login = () => ({type: SUCCESSFUL_LOGIN});
 const logout = () => ({type: LOGOUT});
-const failedLogin = err => ({type: LOGIN_ATTEMPT, payload: err});
+const failedLogin = err => ({type: LOGIN_FAIL, payload: err});
+const inputText = change => ({type: EDIT_FORM, payload: change })
 
-export const userLogin = dispatch => (email, password) => {
+export const userLogin = (email, password) => dispatch => {
   firebase.auth().signInWithEmailAndPassword(email, password)
-  .then(() => (dispatch(login())))
+  .then(() => {
+    dispatch(login());
+  })
   .catch(err => {
-    dispatch(failedLogin(err));
+    console.log(err)
+    dispatch(failedLogin(err.message));
     }
   );
 };
 
-export const userLogout = dispatch => () => {
+export const userLogout = () => dispatch => {
   dispatch(logout());
   firebase.auth().signOut();
-}
+};
+
+
+//Login Form
+export const changeForm = change => dispatch => {
+  dispatch(inputText(change));
+};
