@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {} from 'react-native';
 
 import {Provider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
@@ -18,16 +14,14 @@ pushNotifications.configure();
 pushNotifications.register();
 
 
-export default class App extends Component {
-  componentWillMount() {
-    firebase.initializeApp(firebaseData);
-  }
-  render () {
-    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
-    return (
-        <Provider store={store}>
-          <HomePage />
-        </Provider>
-    )
-  }
-}
+const App = () => {
+  firebase.initializeApp(firebaseData);
+  const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+  return (
+    <Provider store={store}>
+      <HomePage />
+    </Provider>
+  );
+};
+
+export default App;
