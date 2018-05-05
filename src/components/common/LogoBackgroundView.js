@@ -4,7 +4,7 @@ import {View, Image} from 'react-native';
 const LogoBackgroundView = () => (
   <View style={styles.container}>
         <Image
-          source={require('./src/components/imgs/CSHLogo.png')}
+          source={require('../imgs/CSHLogo.png')}
           style={styles.bkg}
         />
   </View>
@@ -29,4 +29,4 @@ const styles = {
     backgroundColor: '#F5FCFF',
   }
 };
-export default {LogoBackgroundView};
+export {LogoBackgroundView};
