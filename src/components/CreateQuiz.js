@@ -24,14 +24,7 @@ class QuizForm extends Component {
         </CardSection>
         <CardSection>
           <Button
-            onPress = {() => {this.props.createQuiz(this.state.name, [
-              // {question: 'You stole the cookie from the cookie jar?',
-              // choices: ['who me', 'not me', "couldn't be"]},
-              {id: 'Kd6sH18mTlpt8c6zBd56'},
-              {id: 'dzL5Hi7EAYqRjqSDgSS7'}
-            //   {question: 'Que',
-            // choices: ['Tu', 'Yo', 'Ellos', 'Nosotros']}
-            ])}}
+            onPress = {() => {this.props.createQuiz()}}
             title = 'Create'
           />
         </CardSection>
