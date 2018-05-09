@@ -25,8 +25,8 @@ pushNotifications.register();
 
 type Props = {};
 export default class App extends Component<Props> {
-
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <Image
@@ -36,10 +36,14 @@ export default class App extends Component<Props> {
 
         <View style={styles.menuBar}>
 
-          <Button className = "menuBox" title = {"ProfileImage"} onPress={()=>{}} style={styles.profile}/>
+          <Button className = "menuBox" title = {"ProfileImage"} onPress={() =>
+          navigate('Login')
+        } style={styles.profile}/>
 
 
-          <Button className = "menuBox" title = {"GameImage"} onPress={()=>{}} style={styles.game}/>
+          <Button className = "menuBox" title = {"GameImage"} onPress={() =>
+          navigate('Quiz')
+        } style={styles.game}/>
 
           <Button className = "menuBox" title = {"InfoImage"} onPress={()=>{}} style={styles.info}/>
 
