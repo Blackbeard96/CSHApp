@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
 import Question from './Question';
 import {View, Text, Button} from 'react-native';
+import firebase from 'firebase';
 
 class Quiz extends Component{
+  // seedQuestions(){
+  //   // Add a new document in collection "cities" with ID 'LA'
+  //   const db = firebase.firestore();
+  // quizQuestions.forEach(item => {
+  //   db.collection('Questions').add(item)
+  // })
+  // }
   render(){
     return (
       <View style={{flex: 1}}>
@@ -11,20 +19,12 @@ class Quiz extends Component{
             question = {quizQuestions[0].question}
             choices = {quizQuestions[0].choices}
           />
-          <Button title = {"seed"} onPress={() =>
-          seedQuestions()
-        } style={styles.profile}/>
       </View>
     );
   }
 }
 
 export default Quiz;
-
-const seedQuestions = () => {
-  // Add a new document in collection "cities" with ID 'LA'
-// var setDoc = db.collection('cities').doc('LA').set(data);
-};
 
 const quizQuestions = [
   {

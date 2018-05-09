@@ -8,7 +8,6 @@ require('firebase/firestore');
 import {firebaseData, firebasePrivateKey} from '../secrets';
 
 import {pushNotifications} from './services';
-import HomePage from './App';
 import { createStackNavigator, addNavigationHelpers } from 'react-navigation';
 import { YellowBox } from 'react-native';
 import Routes from './Routes';
@@ -55,10 +54,10 @@ function App() {
   db.settings(settings);
   YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
   return (
-    <Provider store={store} db={db}>
+    <Provider store={store}>
       <AppWithNavigationState />
     </Provider>
   );
 }
 
-export default Apper;
+export default App;
