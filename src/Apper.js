@@ -3,12 +3,12 @@ import React, {Component} from 'react';
 import { createStackNavigator, addNavigationHelpers } from 'react-navigation';
 import { Provider, connect } from 'react-redux';
 import { firebaseData } from '../secrets';
+import { YellowBox } from 'react-native';
 import HomePage from './App';
 import Routes from './Routes';
 // import reducers from './reducers';
 import { pushNotifications } from './services';
 import getStore from './store';
-
 
 pushNotifications.configure();
 pushNotifications.register();
@@ -47,7 +47,7 @@ const store = getStore(navReducer);
 
 function App() {
   firebase.initializeApp(firebaseData);
-
+  YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
   return (
     <Provider store={store}>
       <AppWithNavigationState />
