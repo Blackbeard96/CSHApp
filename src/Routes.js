@@ -2,11 +2,16 @@ import App from './App';
 import Auth from './components/Auth';
 import MainPage from './components/MainPage';
 import Quiz from './components/Quiz';
+import Admin from './components/Admin';
+import CreateQuiz from './components/CreateQuiz';
+
 const Routes = {
     App: {screen: App},
     Login: {screen: Auth},
     MainPage: {screen: MainPage},
-    Quiz: {screen: Quiz}
+    Quiz: {screen: Quiz},
+    Admin: {screen: Admin},
+    CreateQuiz: {screen: CreateQuiz}
 };
 
 export default Routes;
