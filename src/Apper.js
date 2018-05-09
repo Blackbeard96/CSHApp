@@ -1,18 +1,21 @@
-import firebase from 'firebase';
-import React, {Component} from 'react';
-import { createStackNavigator, addNavigationHelpers } from 'react-navigation';
-import { Provider, connect } from 'react-redux';
-import { firebaseData } from '../secrets';
-import { YellowBox } from 'react-native';
-import HomePage from './App';
-import Routes from './Routes';
+import React, { Component } from 'react';
+import {Provider, connect} from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import {createStore, applyMiddleware} from 'redux';
 // import reducers from './reducers';
-import { pushNotifications } from './services';
+import firebase from 'firebase';
+require('firebase/firestore');
+import {firebaseData, firebasePrivateKey} from '../secrets';
+
+import {pushNotifications} from './services';
+import HomePage from './App';
+import { createStackNavigator, addNavigationHelpers } from 'react-navigation';
+import { YellowBox } from 'react-native';
+import Routes from './Routes';
 import getStore from './store';
 
 pushNotifications.configure();
 pushNotifications.register();
-
 
 const AppNavigator = createStackNavigator(Routes, {
   navigationOptions: {
@@ -47,13 +50,15 @@ const store = getStore(navReducer);
 
 function App() {
   firebase.initializeApp(firebaseData);
+  const db = firebase.firestore();
+  const settings = {timestampsInSnapshots: true};
+  db.settings(settings);
   YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
   return (
-    <Provider store={store}>
+    <Provider store={store} db={db}>
       <AppWithNavigationState />
-      {/* <HomePage /> */}
     </Provider>
   );
 }
 
-export default App;
+export default Apper;

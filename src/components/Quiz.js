@@ -11,6 +11,9 @@ class Quiz extends Component{
             question = {quizQuestions[0].question}
             choices = {quizQuestions[0].choices}
           />
+          <Button title = {"seed"} onPress={() =>
+          seedQuestions()
+        } style={styles.profile}/>
       </View>
     );
   }
@@ -18,6 +21,10 @@ class Quiz extends Component{
 
 export default Quiz;
 
+const seedQuestions = () => {
+  // Add a new document in collection "cities" with ID 'LA'
+// var setDoc = db.collection('cities').doc('LA').set(data);
+};
 
 const quizQuestions = [
   {
