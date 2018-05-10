@@ -14,8 +14,16 @@ export const createQuiz = (name, questions) => dispatch => {
   .then(() => {
     let questionReferences = [];
     questions.forEach(item => {
-      let qRef = db.collection('Questions').doc(`${item.id}`);
-      questionReferences.push(qRef);
+      if (item.id) {
+        let qRef = db.collection('Questions').doc(`${item.id}`);
+        questionReferences.push(qRef);
+      }
+      else {
+        let newQ = db.collection('Questions').doc();
+        newQ.set(item);
+        questionReferences.push(newQ);
+
+      }
     });
     db.collection('Quiz').doc(`${name}`).update({questions: questionReferences});
   })
