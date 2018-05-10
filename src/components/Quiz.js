@@ -5,7 +5,6 @@ import firebase from 'firebase';
 
 class Quiz extends Component{
   // seedQuestions(){
-  //   // Add a new document in collection "cities" with ID 'LA'
   //   const db = firebase.firestore();
   // quizQuestions.forEach(item => {
   //   db.collection('Questions').add(item)
