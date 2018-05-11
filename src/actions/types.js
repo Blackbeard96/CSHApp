@@ -12,14 +12,13 @@ export const GET_QUIZES = 'GET_QUIZES';
 
 
 //QuizForm actions
-export const GET_QUIZ = 'GET_QUIZ';
-export const EDIT_QUIZ = 'EDIT_QUIZ';
-export const EDIT_QUESTIONS = 'EDIT_QUESTIONS';
-export const CREATE_QUIZ = 'ADD_QUIZ';
+export const SAVE_QUIZ = 'SAVE_QUIZ';
+export const ADD_QUESTION = 'ADD_QUESTION';
+export const TITLE_QUIZ = 'TITLE_QUIZ';
+export const REMOVE_QUESTION = 'REMOVE_QUESTION';
 
 
 //QuestionForm actions
 export const EDIT_CHOICE = 'EDIT_CHOICE';
 export const EDIT_QUESTION = 'EDIT_QUESTION';
 export const PICK_ANSWER = 'PICK_ANSWER';
-export const ADD_QUESTION = 'ADD_QUESTION';

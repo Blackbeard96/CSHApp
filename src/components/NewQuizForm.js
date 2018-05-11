@@ -2,32 +2,26 @@ import React, {Component} from 'react';
 import {Button, ListView} from 'react-native';
 import { connect } from 'react-redux';
 import {InputRow, Card, CardSection} from './common';
-import {createQuiz} from '../actions';
+import {createQuiz, editName, addQuestion} from '../actions';
 import NewQuestionForm from './NewQuestionForm';
 
-const QuizForm = () => {
+const QuizForm = (props) => {
   return (
     <Card>
       <CardSection>
       <InputRow
         label = "Title"
-        onChangeText = {(name) => {}}
-        placeholder = "*"
-        value = {''}
+        onChangeText = {(text) => {props.editName(text);}}
+        placeholder = "Quiz Title"
+        value = {props.qTitle}
       />
-      </CardSection>
-      <CardSection>
-        {/* <ListView
-          // dataSource={this.state.dataSource}
-          // renderRow={({question}) => <Text>Question</Text>}
-        /> */}
       </CardSection>
       <CardSection style = {{flexDirection: 'column', minHeight: 280}}>
         <NewQuestionForm />
       </CardSection>
       <CardSection>
         <Button
-          onPress = {() => {}}
+          onPress = {() => props.createQuiz(props.qTitle, props.questions)}
           title = "Create"
         />
       </CardSection>
@@ -36,8 +30,9 @@ const QuizForm = () => {
 };
 
 
-const mapState = () => {
-  return {};
+const mapState = state => {
+  let {qTitle, questions} = state.quizForm;
+  return {qTitle,questions};
 };
 
-export default connect(mapState, {createQuiz})(QuizForm);
+export default connect(mapState, {createQuiz, editName})(QuizForm);

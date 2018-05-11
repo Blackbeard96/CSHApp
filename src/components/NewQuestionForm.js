@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Text, View, Switch, TextInput} from 'react-native';
 import { connect } from 'react-redux';
 import {InputRow} from './common';
-import {createQuiz, putChoice, putQuestion, putAnswer, submitQuestion} from '../actions';
+import {putChoice, putQuestion, putAnswer, addQuestion} from '../actions';
 
 const NewQuestionForm = (props) => {
   return (
@@ -39,7 +39,10 @@ const NewQuestionForm = (props) => {
         })
       }
       <Button
-        onPress={() => props.submitQuestion()}
+        onPress={() => {
+          let {choices, question, answer} = props;
+          props.addQuestion({question, choices, answer: choices[answer]});
+      }}
         title = "Save"
       />
     </View>
@@ -51,4 +54,4 @@ const mapState = ({questionForm}) => {
   return {question, choices, answer};
 };
 
-export default connect(mapState, {createQuiz, putChoice, putQuestion, putAnswer, submitQuestion})(NewQuestionForm);
+export default connect(mapState, {putChoice, putQuestion, putAnswer, addQuestion})(NewQuestionForm);

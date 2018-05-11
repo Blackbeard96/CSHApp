@@ -1,3 +1,4 @@
 export * from './auth';
-export * from './quiz';
+export * from './quizForm';
 export * from './questionForm';
+
