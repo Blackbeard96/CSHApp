@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, ListView} from 'react-native';
+import {Button, ListView, Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import {InputRow, Card, CardSection} from './common';
 import {createQuiz, editName, addQuestion} from '../actions';
@@ -15,6 +15,16 @@ const QuizForm = (props) => {
         placeholder = "Quiz Title"
         value = {props.qTitle}
       />
+      </CardSection>
+      <CardSection style={{minHeight: 200}}>
+        {
+          props.questions.map(q =>
+            (<View key={q.question} style={{minHeight: 100}}>
+            <Text>{q.question} </Text>
+            <Text>{q.choices[0]}</Text>
+            </View>)
+          )
+        }
       </CardSection>
       <CardSection style = {{flexDirection: 'column', minHeight: 280}}>
         <NewQuestionForm />
@@ -32,7 +42,7 @@ const QuizForm = (props) => {
 
 const mapState = state => {
   let {qTitle, questions} = state.quizForm;
-  return {qTitle,questions};
+  return {qTitle, questions};
 };
 
 export default connect(mapState, {createQuiz, editName})(QuizForm);

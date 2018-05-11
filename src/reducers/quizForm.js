@@ -8,10 +8,8 @@ const defaultState = {
 export default function (state = defaultState, action) {
   switch (action.type) {
     case TITLE_QUIZ:
-    console.log("performing action", action.type)
       return {...state, qTitle:action.payload};
     case ADD_QUESTION:
-    console.log("performing action", action.type)
       let {questions}= state;
       questions.push(action.payload);
       return {...state, questions};
@@ -20,7 +18,6 @@ export default function (state = defaultState, action) {
     //   question.filter((el,idx )=> idx != action.payload);
     //   return {...state, questions};
     case SAVE_QUIZ:
-    console.log("performing action", action.type)
     default:
       return state;
   }

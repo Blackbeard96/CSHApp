@@ -40,8 +40,8 @@ const NewQuestionForm = (props) => {
       }
       <Button
         onPress={() => {
-          let {choices, question, answer} = props;
-          props.addQuestion({question, choices, answer: choices[answer]});
+          const {choices, question, answer} = props;
+          props.addQuestion({question, choices: choices.slice(), answer: choices[answer]});
       }}
         title = "Save"
       />

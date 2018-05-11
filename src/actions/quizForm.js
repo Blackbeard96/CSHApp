@@ -11,7 +11,6 @@ export const addQuestion = quest => dispatch => dispatch(newQuestion(quest));
 export const removeQuestion = pos => dispatch => dispatch(delQuestion(pos));
 
 export const createQuiz = (name, questions) => dispatch => {
-  console.log("adding this", name, questions);
   const db = firebase.firestore();
   db.collection('Quiz').doc(`${name}`).set({name, questions: []})
   .then(() => {
@@ -29,6 +28,6 @@ export const createQuiz = (name, questions) => dispatch => {
     });
     db.collection('Quiz').doc(`${name}`).update({questions: questionReferences});
   })
-  .catch(err => console.log(err))
+  .catch(err => console.log(err));
   dispatch(saveQuiz());
 };
