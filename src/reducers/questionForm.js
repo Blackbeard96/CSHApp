@@ -1,4 +1,4 @@
-import {EDIT_CHOICE, EDIT_QUESTION, PICK_ANSWER, ADD_QUESTION} from '../actions/types';
+import {EDIT_CHOICE, EDIT_QUESTION, PICK_ANSWER, ADD_QUESTION, CLEAR_QUESTION_FORM} from '../actions/types';
 
 defaultState = {
   question: '',
@@ -16,6 +16,8 @@ export default function (state = defaultState, action) {
       return {...state, question: action.payload};
     case PICK_ANSWER:
       return {...state, answer:action.payload};
+    case CLEAR_QUESTION_FORM:
+      return defaultState;
     default:
       return state;
   }
