@@ -16,3 +16,10 @@ export const GET_QUIZ = 'GET_QUIZ';
 export const EDIT_QUIZ = 'EDIT_QUIZ';
 export const EDIT_QUESTIONS = 'EDIT_QUESTIONS';
 export const CREATE_QUIZ = 'ADD_QUIZ';
+
+
+//QuestionForm actions
+export const EDIT_CHOICE = 'EDIT_CHOICE';
+export const EDIT_QUESTION = 'EDIT_QUESTION';
+export const PICK_ANSWER = 'PICK_ANSWER';
+export const ADD_QUESTION = 'ADD_QUESTION';

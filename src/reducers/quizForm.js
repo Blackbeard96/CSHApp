@@ -1,6 +1,7 @@
 import {} from '../actions/types';
 const defaultState = {
-
+  name: '',
+  questions: ''
 };
 
 
