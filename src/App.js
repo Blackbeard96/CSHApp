@@ -47,6 +47,9 @@ export default class App extends Component<Props> {
 
           <Button className = "menuBox" title = {"InfoImage"} onPress={()=>{}} style={styles.info}/>
 
+          <Button className = "menuBox" title = {"AdminPage"} onPress={() =>
+          navigate('Admin')
+        } style={styles.game}/>
 
        </View>
 

@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
 import Question from './Question';
 import {View, Text, Button} from 'react-native';
+import firebase from 'firebase';
 
 class Quiz extends Component{
+  // seedQuestions(){
+  //   const db = firebase.firestore();
+  // quizQuestions.forEach(item => {
+  //   db.collection('Questions').add(item)
+  // })
+  // }
   render(){
     return (
       <View style={{flex: 1}}>
@@ -17,7 +24,6 @@ class Quiz extends Component{
 }
 
 export default Quiz;
-
 
 const quizQuestions = [
   {
