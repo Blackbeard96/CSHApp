@@ -23,16 +23,16 @@ const NewQuestionForm = (props) => {
               key = {`${op}`}
               >
             <Switch
-              // onValueChange = {(val) => {
-              //   val && props.putAnswer(idx);
-              // }}
+              onValueChange = {(val) => {
+                val && props.putAnswer(idx);
+              }}
               value = {props.answer == idx}
             />
             <InputRow
               label = {`${op}`}
-              // onChangeText = {(text) => {props.putChoice(idx, text);}}
+              onChangeText = {(text) => {props.putChoice(idx, text);}}
               placeholder = {`Choice ${op}`}
-              // value = {props.choices[idx]}
+              value = {props.choices[idx]}
             />
             </View>
           );

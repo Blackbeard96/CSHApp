@@ -1,6 +1,6 @@
 import {EDIT_CHOICE, EDIT_QUESTION, PICK_ANSWER, ADD_QUESTION, CLEAR_QUESTION_FORM} from '../actions/types';
 
-defaultState = {
+const defaultState = {
   question: '',
   choices: [],
   answer: 0
