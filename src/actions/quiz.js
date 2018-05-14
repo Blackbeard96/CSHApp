@@ -1,31 +1,18 @@
-import {EDIT_QUIZ, EDIT_QUESTIONS, CREATE_QUIZ} from './types';
+import {GET_QUIZZES} from './types';
 import firebase from 'firebase';
 
-const editQuizName = name => ({type: EDIT_QUIZ, payload: name});
-const changeQuestion = question => ({type: EDIT_QUESTIONS, payload: question});
-const saveQuiz = () => ({type: CREATE_QUIZ});
+const getQuizzes = quizData => ({type: GET_QUIZZES, payload: quizData});
 
-export const editName = name => dispatch => dispatch(editQuizName(name));
-export const addQuestion = quest => dispatch => dispatch(changeQuestion(quest));
-
-export const createQuiz = (name, questions) => dispatch => {
+export const fetchQuizzes = () => dispatch => {
+  const {user} = firebase.auth();
   const db = firebase.firestore();
-  db.collection('Quiz').doc(`${name}`).set({name, questions: []})
-  .then(() => {
-    let questionReferences = [];
-    questions.forEach(item => {
-      let qRef;
-      if (item.id) {
-        qRef = db.collection('Questions').doc(`${item.id}`);
-      }
-      else {
-        qRef = db.collection('Questions').doc();
-        qRef.set(item);
-      }
-      questionReferences.push(qRef);
+  db.collection('Quiz')
+  .onSnapshot(function(querySnapshot) {
+    var quizzes = [];
+    querySnapshot.forEach(function(doc) {
+      // console.log(doc)
+        quizzes.push({id: doc.id, name: doc.data().name});
     });
-    db.collection('Quiz').doc(`${name}`).update({questions: questionReferences});
-  })
-  .catch(err => console.log(err))
-  dispatch(saveQuiz());
+    dispatch(getQuizzes(quizzes));
+  });
 };
