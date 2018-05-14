@@ -17,48 +17,40 @@ import {
 } from 'react-native';
 
 
-import {pushNotifications} from './src/services';
+import {pushNotifications} from './services';
 
 pushNotifications.configure();
 pushNotifications.register();
 
 
-
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
 type Props = {};
 export default class App extends Component<Props> {
-
-
-
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        
-       
-        
         <Image
-          source={require('./CSHLogo.png')}
+          source={require('./components/imgs/CSHLogo.png')}
           style={styles.bkg}
         />
 
-
         <View style={styles.menuBar}>
 
-          <Button className = "menuBox" title = {"ProfileImage"} style={styles.profile}/>
+          <Button className = "menuBox" title = {"ProfileImage"} onPress={() =>
+          navigate('Login')
+        } style={styles.profile}/>
 
 
-          <Button className = "menuBox" title = {"GameImage"} style={styles.game}/>
+          <Button className = "menuBox" title = {"GameImage"} onPress={() =>
+          navigate('Quiz')
+        } style={styles.game}/>
 
-          <Button className = "menuBox" title = {"InfoImage"} style={styles.info}/>
+          <Button className = "menuBox" title = {"InfoImage"} onPress={()=>{}} style={styles.info}/>
 
-           
+          <Button className = "menuBox" title = {"AdminPage"} onPress={() =>
+          navigate('Admin')
+        } style={styles.game}/>
+
        </View>
 
 
@@ -72,8 +64,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    width: '100%',
+    // backgroundColor: '#FFFFFF',
+    // width: '100%',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
@@ -83,12 +75,12 @@ const styles = StyleSheet.create({
   },
 
   bkg:{
-    flex: 1,
+    // flex: 1,
     position: 'absolute',
-    
-    height: '30%',
-    width: '30%',
+    height: '100%',
+    width: '100%',
     opacity: 0.2,
+    resizeMode: 'contain'
 
   },
 
