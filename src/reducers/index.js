@@ -12,9 +12,9 @@ export default function getRootReducer(navReducer) {
   return combineReducers({
     nav: navReducer,
     auth,
-    questionForm,
     quizForm,
-    qList
+    qList,
+    questionForm
   });
 }
 

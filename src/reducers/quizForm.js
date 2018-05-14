@@ -20,6 +20,6 @@ export default function (state = defaultState, action) {
     case CLEAR_QUIZ_FORM:
     case SAVE_QUIZ:
     default:
-      return defaultState;
+      return state;
   }
 }

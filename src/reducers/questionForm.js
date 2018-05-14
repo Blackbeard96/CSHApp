@@ -1,6 +1,6 @@
 import {EDIT_CHOICE, EDIT_QUESTION, PICK_ANSWER, ADD_QUESTION, CLEAR_QUESTION_FORM} from '../actions/types';
 
-defaultState = {
+const defaultState = {
   question: '',
   choices: [],
   answer: 0
@@ -17,7 +17,8 @@ export default function (state = defaultState, action) {
     case PICK_ANSWER:
       return {...state, answer:action.payload};
     case CLEAR_QUESTION_FORM:
-    default:
       return defaultState;
+    default:
+      return state;
   }
 }

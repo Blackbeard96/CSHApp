@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {InputRow} from './common';
 import {putChoice, putQuestion, putAnswer, addQuestion} from '../actions';
 
-const NewQuestionForm = (props) => {
+const QuestionForm = (props) => {
   console.log(props)
   return (
     <View>
@@ -24,16 +24,16 @@ const NewQuestionForm = (props) => {
               key = {`${op}`}
               >
             <Switch
-              // onValueChange = {(val) => {
-              //   val && props.putAnswer(idx);
-              // }}
+              onValueChange = {(val) => {
+                val && props.putAnswer(idx);
+              }}
               value = {props.answer == idx}
             />
             <InputRow
               label = {`${op}`}
-              // onChangeText = {(text) => {props.putChoice(idx, text);}}
+              onChangeText = {(text) => {props.putChoice(idx, text);}}
               placeholder = {`Choice ${op}`}
-              // value = {props.choices[idx]}
+              value = {props.choices[idx]}
             />
             </View>
           );
@@ -52,8 +52,7 @@ const NewQuestionForm = (props) => {
 
 const mapState = (state) => {
   let {question, choices, answer} = state.questionForm;
-  console.log("qf", state)
   return {question, choices, answer};
 };
 
-export default connect(mapState, {putChoice, putQuestion, putAnswer, addQuestion})(NewQuestionForm);
+export default connect(mapState, {putChoice, putQuestion, putAnswer, addQuestion})(QuestionForm);
