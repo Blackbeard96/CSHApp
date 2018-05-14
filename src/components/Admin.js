@@ -33,7 +33,6 @@ class Admin extends Component {
             </View>
           </TouchableOpacity>
         }
-
         rightData = {
           <TouchableOpacity style={{flex: 1}} onPress = {() => {console.log('Starting Quiz');}} >
             <LogoBackgroundView>

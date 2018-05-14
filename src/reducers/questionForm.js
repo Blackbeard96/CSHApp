@@ -3,13 +3,13 @@ import {EDIT_CHOICE, EDIT_QUESTION, PICK_ANSWER, ADD_QUESTION, CLEAR_QUESTION_FO
 const defaultState = {
   question: '',
   choices: [],
-  answer: 0
+  answer: ''
 };
 
 export default function (state = defaultState, action) {
   switch (action.type) {
     case EDIT_CHOICE:
-      let choices = state.choices;
+      let choices = state.choices.slice();
       choices[action.index] = action.text
       return {...state,choices};
     case EDIT_QUESTION:
