@@ -1,8 +1,9 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
+import {CardSection} from './CardSection';
 
 const ListItem = ({leftData, mainTitle, subTite, rightData}) => (
-  <View style = {styles.container}>
+  <CardSection style = {styles.container}>
     <View style={styles.leftData}>
       {leftData}
     </View>
@@ -10,10 +11,10 @@ const ListItem = ({leftData, mainTitle, subTite, rightData}) => (
       <Text style={styles.titleTex}>{mainTitle}</Text>
       <Text style={styles.subTitleText}>{subTite}</Text>
     </View>
-    <View style={styles.mainData}>
+    <View style={styles.rightData}>
       {rightData}
     </View>
-  </View>
+  </CardSection>
 );
 
 export {ListItem};
@@ -25,12 +26,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   leftData: {
-    flex: 1
+    flex: 1,
+    padding: 2
   },
-  mainData:{
-    flex: 2
+  mainData: {
+    flex: 4
   },
-  rightData:{
+  rightData: {
     flex: 1
   },
   titleTex: {

@@ -5,7 +5,6 @@ import {InputRow} from './common';
 import {putChoice, putQuestion, putAnswer, addQuestion} from '../actions';
 
 const QuestionForm = (props) => {
-  console.log(props)
   return (
     <View>
         <Text> New Question </Text>

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text, Button, ListView, TouchableOpacity} from 'react-native';
+import {View, Text, Button, ListView, TouchableOpacity, Image} from 'react-native';
 import {connect} from 'react-redux';
 import {fetchQuizzes, deleteQuiz} from '../actions';
-import {Header, ListItem} from './common';
+import {Header, ListItem, LogoBackgroundView} from './common';
 
 
 class Admin extends Component {
@@ -20,21 +20,29 @@ class Admin extends Component {
     this.dataSource = ds.cloneWithRows(quiz);
   }
   renderRow (data) {
-  // return (
-  //   <View style={{height: 20}}>
-  //     <Text>{data.name}</Text>
-  //   </View>
-  // )
-  return(
-    <ListItem
-      mainTitle = {data.name}
-      leftData = {
-        <TouchableOpacity onPress={() => this.props.deleteQuiz()}>
-          x
-        </TouchableOpacity>
-      }
-    />
-  )
+    return (
+      <ListItem
+        mainTitle = {data.name}
+        leftData = {
+          <TouchableOpacity onPress={() => this.props.deleteQuiz(data.id)}>
+            <View>
+              <Image
+                source={require('./imgs/trash.png')}
+                style={{width: '95%', height: '95%', resizeMode: 'contain'}}
+              />
+            </View>
+          </TouchableOpacity>
+        }
+
+        rightData = {
+          <TouchableOpacity style={{flex: 1}} onPress = {() => {console.log('Starting Quiz');}} >
+            <LogoBackgroundView>
+              <Text> Start </Text>
+            </LogoBackgroundView>
+          </TouchableOpacity>
+        }
+      />
+    );
   }
 
   render () {
@@ -45,7 +53,7 @@ class Admin extends Component {
           <ListView
             enableEmptySections
             dataSource={this.dataSource}
-            renderRow = {this.renderRow}
+            renderRow = {this.renderRow.bind(this)}
           />
           <Button
 className = "menuBox" title = {'Create Quiz'} onPress={() =>

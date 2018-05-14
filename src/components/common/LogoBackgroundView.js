@@ -1,12 +1,13 @@
 import React from 'react';
 import {View, Image} from 'react-native';
 
-const LogoBackgroundView = () => (
-  <View style={styles.container}>
+const LogoBackgroundView = ({style, children}) => (
+  <View style={[styles.container, style]}>
         <Image
           source={require('../imgs/CSHLogo.png')}
           style={styles.bkg}
         />
+        {children}
   </View>
 );
 
