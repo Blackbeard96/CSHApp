@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text, Button, ListView} from 'react-native';
+import {View, Text, Button, ListView, TouchableOpacity, Image} from 'react-native';
 import {connect} from 'react-redux';
-import {fetchQuizzes} from '../actions';
-import {Header} from './common';
+import {fetchQuizzes, deleteQuiz} from '../actions';
+import {Header, ListItem, LogoBackgroundView} from './common';
 
 
 class Admin extends Component {
@@ -20,24 +20,39 @@ class Admin extends Component {
     this.dataSource = ds.cloneWithRows(quiz);
   }
   renderRow (data) {
-  return (
-    <View style={{height: 20}}>
-      <Text>{data.name}</Text>
-    </View>
-  )
+    return (
+      <ListItem
+        mainTitle = {data.name}
+        leftData = {
+          <TouchableOpacity onPress={() => this.props.deleteQuiz(data.id)}>
+            <View>
+              <Image
+                source={require('./imgs/trash.png')}
+                style={{width: '95%', height: '95%', resizeMode: 'contain'}}
+              />
+            </View>
+          </TouchableOpacity>
+        }
+        rightData = {
+          <TouchableOpacity style={{flex: 1}} onPress = {() => {console.log('Starting Quiz');}} >
+            <LogoBackgroundView>
+              <Text> Start </Text>
+            </LogoBackgroundView>
+          </TouchableOpacity>
+        }
+      />
+    );
   }
 
   render () {
     const { navigate } = this.props.navigation;
-    console.log('the 0ros', this.props.quiz);
     return (
       <View>
-          <Header label ={'Quiz List'}>
-          </Header>
+          <Header label ={'Quiz List'} />
           <ListView
             enableEmptySections
             dataSource={this.dataSource}
-            renderRow = {this.renderRow}
+            renderRow = {this.renderRow.bind(this)}
           />
           <Button
 className = "menuBox" title = {'Create Quiz'} onPress={() =>
@@ -53,4 +68,4 @@ return ({quiz: state.qList});
 };
 
 
-export default connect(mapState, {fetchQuizzes})(Admin);
+export default connect(mapState, {fetchQuizzes, deleteQuiz})(Admin);

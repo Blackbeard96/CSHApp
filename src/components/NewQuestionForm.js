@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import {InputRow} from './common';
 import {putChoice, putQuestion, putAnswer, addQuestion} from '../actions';
 
-const NewQuestionForm = (props) => {
+const QuestionForm = (props) => {
+  console.log("props", props)
   return (
     <View>
         <Text> New Question </Text>
@@ -43,15 +44,15 @@ const NewQuestionForm = (props) => {
           const {choices, question, answer} = props;
           props.addQuestion({question, choices: choices.slice(), answer: choices[answer]});
       }}
-        title = "Save"
+        title = "Add Question"
       />
     </View>
   );
 };
 
-const mapState = ({questionForm}) => {
-  let {question, choices, answer} = questionForm;
+const mapState = (state) => {
+  let {question, choices, answer} = state.questionForm;
   return {question, choices, answer};
 };
 
-export default connect(mapState, {putChoice, putQuestion, putAnswer, addQuestion})(NewQuestionForm);
+export default connect(mapState, {putChoice, putQuestion, putAnswer, addQuestion})(QuestionForm);

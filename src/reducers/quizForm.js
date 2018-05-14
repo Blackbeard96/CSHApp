@@ -10,16 +10,15 @@ export default function (state = defaultState, action) {
     case TITLE_QUIZ:
       return {...state, qTitle:action.payload};
     case ADD_QUESTION:
-      let {questions}= state;
+      let questions = state.questions.slice();
       questions.push(action.payload);
       return {...state, questions};
+    case REMOVE_QUESTION:
+      let newQuestions = state.questions.filter((el,idx )=> idx != action.payload);
+      return {...state, questions: newQuestions};
     case CLEAR_QUIZ_FORM:
-      return defaultState;
-    // case REMOVE_QUESTION:
-    //   let {questions}= state;
-    //   question.filter((el,idx )=> idx != action.payload);
-    //   return {...state, questions};
     case SAVE_QUIZ:
+      return defaultState;
     default:
       return state;
   }

@@ -1,43 +1,74 @@
 import React, {Component} from 'react';
-import {Button, ListView, Text, View} from 'react-native';
+import {Button, ListView, TouchableOpacity, View, Image} from 'react-native';
 import { connect } from 'react-redux';
-import {InputRow, Card, CardSection} from './common';
-import {createQuiz, editName, addQuestion} from '../actions';
+import {InputRow, Card, CardSection, ListItem} from './common';
+import {createQuiz, editName, removeQuestion} from '../actions';
 import NewQuestionForm from './NewQuestionForm';
 
-const QuizForm = (props) => {
-  return (
-    <Card>
-      <CardSection>
-      <InputRow
-        label = "Title"
-        onChangeText = {(text) => {props.editName(text);}}
-        placeholder = "Quiz Title"
-        value = {props.qTitle}
-      />
-      </CardSection>
-      <CardSection style={{minHeight: 200}}>
-        {
-          props.questions.map(q =>
-            (<View key={q.question} style={{minHeight: 100}}>
-            <Text>{q.question} </Text>
-            <Text>{q.choices[0]}</Text>
-            </View>)
-          )
+class QuizForm extends Component {
+  componentWillMount() {
+    this.createDataSource(this.props);
+  }
+  componentWillReceiveProps(nextProps){
+    this.createDataSource(nextProps);
+  }
+  createDataSource({questions}) {
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    this.dataSource = ds.cloneWithRows(questions);
+  }
+  renderRow(item,sId, rId) {
+    return (
+      <ListItem
+        style= {{maxHeight: 70}}
+        mainTitle = {item.question}
+        subTitle = {item.answer}
+        leftData = {
+          <TouchableOpacity onPress={() => {this.props.removeQuestion(rId)}}>
+            <View>
+              <Image
+                source={require('./imgs/trash.png')}
+                style={{width: '95%', height: '95%', resizeMode: 'contain'}}
+              />
+            </View>
+          </TouchableOpacity>
         }
-      </CardSection>
-      <CardSection style = {{flexDirection: 'column', minHeight: 280}}>
-        <NewQuestionForm />
-      </CardSection>
-      <CardSection>
-        <Button
-          onPress = {() => props.createQuiz(props.qTitle, props.questions)}
-          title = "Create"
+      />
+    );
+  }
+  render () {
+    let {editName, createQuiz, qTitle, questions} = this.props;
+    return (
+      <Card>
+        <CardSection>
+        <InputRow
+          label = "Title"
+          onChangeText = {(text) => {editName(text);}}
+          placeholder = "Quiz Title"
+          value = {qTitle}
         />
-      </CardSection>
-    </Card>
-  );
-};
+        </CardSection>
+        <CardSection style={{height: 200}}>
+          <ListView
+            enableEmptySections
+            dataSource = {this.dataSource}
+            renderRow = {this.renderRow.bind(this)}
+          />
+        </CardSection>
+        <CardSection style = {{flexDirection: 'column', minHeight: 280}}>
+          <NewQuestionForm />
+        </CardSection>
+        <CardSection>
+          <Button
+            onPress = {() => createQuiz(qTitle, questions)}
+            title = "Create"
+          />
+        </CardSection>
+      </Card>
+    );
+  }
+}
 
 
 const mapState = state => {
@@ -45,4 +76,4 @@ const mapState = state => {
   return {qTitle, questions};
 };
 
-export default connect(mapState, {createQuiz, editName})(QuizForm);
+export default connect(mapState, {createQuiz, editName, removeQuestion})(QuizForm);

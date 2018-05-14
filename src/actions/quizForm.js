@@ -9,12 +9,13 @@ const clearQuestionForm = () => ({type: CLEAR_QUESTION_FORM});
 const clearQuizForm = () => ({type: CLEAR_QUIZ_FORM});
 
 export const editName = name => dispatch => dispatch(titleQuiz(name));
+
 export const removeQuestion = pos => dispatch => dispatch(delQuestion(pos));
+
 export const addQuestion = quest => dispatch => {
   dispatch(newQuestion(quest));
   dispatch(clearQuestionForm());
 };
-
 
 export const createQuiz = (name, questions) => dispatch => {
   const db = firebase.firestore();
