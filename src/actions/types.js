@@ -8,7 +8,7 @@ export const EDIT_FORM = 'EDIT_FORM';
 
 //Admin actions
 export const GET_QUESTIONS = 'GET_QUESTIONS';
-export const GET_QUIZES = 'GET_QUIZES';
+export const GET_QUIZZES = 'GET_QUIZZES';
 
 
 //QuizForm actions

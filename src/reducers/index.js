@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 import auth from './auth';
 import questionForm from './questionForm';
 import quizForm from './quizForm';
+import qList from './qList';
 
 
 // export default combineReducers({
@@ -12,10 +13,13 @@ export default function getRootReducer(navReducer) {
     nav: navReducer,
     auth,
     questionForm,
-    quizForm
+    quizForm,
+    qList
   });
 }
 
 
 export * from './auth';
-
+export * from './questionForm';
+export * from './quizForm';
+export * from './qList';
