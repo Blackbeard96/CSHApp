@@ -16,6 +16,6 @@ export default function (state = defaultState, action) {
     case LOGOUT:
     case SUCCESSFUL_LOGIN:
     default:
-      return state;
+      return defaultState;
   }
 }

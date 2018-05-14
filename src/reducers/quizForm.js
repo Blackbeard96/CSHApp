@@ -13,14 +13,13 @@ export default function (state = defaultState, action) {
       let {questions}= state;
       questions.push(action.payload);
       return {...state, questions};
-    case CLEAR_QUIZ_FORM:
-      return defaultState;
     // case REMOVE_QUESTION:
     //   let {questions}= state;
     //   question.filter((el,idx )=> idx != action.payload);
     //   return {...state, questions};
+    case CLEAR_QUIZ_FORM:
     case SAVE_QUIZ:
     default:
-      return state;
+      return defaultState;
   }
 }

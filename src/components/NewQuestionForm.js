@@ -5,6 +5,7 @@ import {InputRow} from './common';
 import {putChoice, putQuestion, putAnswer, addQuestion} from '../actions';
 
 const NewQuestionForm = (props) => {
+  console.log(props)
   return (
     <View>
         <Text> New Question </Text>
@@ -15,7 +16,7 @@ const NewQuestionForm = (props) => {
             placeholder = "Question"
             value = {props.question}
           />
-      {
+      {/* {
         ['A', 'B', 'C', 'D'].map((op, idx ) => {
           return (
             <View
@@ -37,7 +38,7 @@ const NewQuestionForm = (props) => {
             </View>
           );
         })
-      }
+      } */}
       <Button
         onPress={() => {
           const {choices, question, answer} = props;
@@ -49,8 +50,9 @@ const NewQuestionForm = (props) => {
   );
 };
 
-const mapState = ({questionForm}) => {
-  let {question, choices, answer} = questionForm;
+const mapState = (state) => {
+  let {question, choices, answer} = state.questionForm;
+  console.log("qf", state)
   return {question, choices, answer};
 };
 

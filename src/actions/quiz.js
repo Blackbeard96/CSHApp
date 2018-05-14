@@ -1,7 +1,8 @@
-import {GET_QUIZZES} from './types';
+import {GET_QUIZZES, DELETE_QUIZ} from './types';
 import firebase from 'firebase';
 
 const getQuizzes = quizData => ({type: GET_QUIZZES, payload: quizData});
+const destroyQuiz = () => ({type: DELETE_QUIZ});
 
 export const fetchQuizzes = () => dispatch => {
   const {user} = firebase.auth();
@@ -15,4 +16,11 @@ export const fetchQuizzes = () => dispatch => {
     });
     dispatch(getQuizzes(quizzes));
   });
+};
+
+export const deleteQuiz = id => dispatch => {
+  const db = firebase.firestore();
+  db.collection('Quiz').doc(id).delete()
+  .then(() => dispatch(destroyQuiz()))
+  .catch(err => console.log('Error deleting quiz', err));
 };

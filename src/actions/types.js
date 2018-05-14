@@ -9,6 +9,7 @@ export const EDIT_FORM = 'EDIT_FORM';
 //Admin actions
 export const GET_QUESTIONS = 'GET_QUESTIONS';
 export const GET_QUIZZES = 'GET_QUIZZES';
+export const DELETE_QUIZ = 'DELETE_QUIZ';
 
 
 //QuizForm actions
