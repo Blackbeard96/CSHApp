@@ -16,7 +16,7 @@ const NewQuestionForm = (props) => {
             placeholder = "Question"
             value = {props.question}
           />
-      {/* {
+      {
         ['A', 'B', 'C', 'D'].map((op, idx ) => {
           return (
             <View
@@ -38,7 +38,7 @@ const NewQuestionForm = (props) => {
             </View>
           );
         })
-      } */}
+      }
       <Button
         onPress={() => {
           const {choices, question, answer} = props;
