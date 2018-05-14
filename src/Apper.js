@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import {Provider, connect} from 'react-redux';
-import ReduxThunk from 'redux-thunk';
-import {createStore, applyMiddleware} from 'redux';
-// import reducers from './reducers';
 import firebase from 'firebase';
 require('firebase/firestore');
-import {firebaseData, firebasePrivateKey} from '../secrets';
+import {firebaseData} from '../secrets';
 
 import {pushNotifications} from './services';
 import { createStackNavigator, addNavigationHelpers } from 'react-navigation';

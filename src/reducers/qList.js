@@ -8,6 +8,6 @@ export default function (state = defaultState, action) {
     case GET_QUIZZES:
       return action.payload;
     default:
-      return state;
+      return defaultState;
   }
 }

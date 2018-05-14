@@ -17,8 +17,7 @@ export default function (state = defaultState, action) {
     case PICK_ANSWER:
       return {...state, answer:action.payload};
     case CLEAR_QUESTION_FORM:
-      return defaultState;
     default:
-      return state;
+      return defaultState;
   }
 }
