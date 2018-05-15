@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, Button, ListView, TouchableOpacity, Image} from 'react-native';
 import {connect} from 'react-redux';
-import {fetchQuizzes, deleteQuiz} from '../actions';
+import {fetchQuizzes, deleteQuiz, openRoom} from '../actions';
 import {Header, ListItem, LogoBackgroundView} from './common';
 
 
@@ -34,7 +34,7 @@ class Admin extends Component {
           </TouchableOpacity>
         }
         rightData = {
-          <TouchableOpacity style={{flex: 1}} onPress = {() => {console.log('Starting Quiz');}} >
+          <TouchableOpacity style={{flex: 1}} onPress = {() => this.props.openRoom(data.id)} >
             <LogoBackgroundView>
               <Text> Start </Text>
             </LogoBackgroundView>
@@ -68,4 +68,4 @@ return ({quiz: state.qList});
 };
 
 
-export default connect(mapState, {fetchQuizzes, deleteQuiz})(Admin);
+export default connect(mapState, {fetchQuizzes, deleteQuiz, openRoom})(Admin);

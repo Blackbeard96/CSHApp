@@ -24,3 +24,15 @@ export const EDIT_CHOICE = 'EDIT_CHOICE';
 export const EDIT_QUESTION = 'EDIT_QUESTION';
 export const PICK_ANSWER = 'PICK_ANSWER';
 export const CLEAR_QUESTION_FORM = 'CLEAR_QUESTION_FORM';
+
+//Game actions
+export const TRACK_QUESTION = 'TRACK_QUESTION';
+export const CHOOSE_ANSWER = 'CHOOSE_ANSWER';
+export const GET_USER_COUNT = 'GET_USER_COUNT';
+export const ENTER_EXIT_ROOM = 'ENTER_EXIT_ROOM';
+
+
+//Admin Game actions
+export const START_GAME = 'START_GAME';
+export const OPEN_ROOM = 'OPEN_ROOM';
+export const VIEW_STATS = 'VIEW_STATS';
