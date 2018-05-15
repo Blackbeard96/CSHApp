@@ -20,7 +20,6 @@ export const openRoom = quizId => dispatch => {
   const {user} = firebase.auth();
   const firestoreDb = firebase.firestore();
   const realTimeDb = firebase.database();
-  // const realTimeDbAttendance = firebase.database().ref('/activeAttendance');
   firestoreDb.collection('Quiz').doc(`${quizId}`).get()
   .then(quizData => {
       let quiz = quizData.data();

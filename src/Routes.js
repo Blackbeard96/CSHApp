@@ -3,7 +3,7 @@ import Auth from './components/Auth';
 import MainPage from './components/MainPage';
 import Quiz from './components/Quiz';
 import Admin from './components/Admin';
-import NewQuizForm from './components/NewQuizForm';
+import QuizForm from './components/QuizForm';
 
 const Routes = {
     App: {screen: App},
@@ -11,7 +11,7 @@ const Routes = {
     MainPage: {screen: MainPage},
     Quiz: {screen: Quiz},
     Admin: {screen: Admin},
-    CreateQuiz: {screen: NewQuizForm}
+    QuizForm: {screen: QuizForm}
 };
 
 export default Routes;

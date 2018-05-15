@@ -24,3 +24,4 @@ export const deleteQuiz = id => dispatch => {
   .then(() => dispatch(destroyQuiz()))
   .catch(err => console.log('Error deleting quiz', err));
 };
+

@@ -2,14 +2,23 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {CardSection} from './CardSection';
 
-const ListItem = ({leftData, mainTitle, subTite, rightData, style}) => (
+const ListItem = ({leftData, mainTitle, mainData, subTite, rightData, style}) => (
   <CardSection style = {[styles.container, style]}>
     <View style={styles.leftData}>
       {leftData}
     </View>
     <View style={styles.mainData}>
-      <Text style={styles.titleTex}>{mainTitle}</Text>
-      <Text style={styles.subTitleText}>{subTite}</Text>
+    {
+      mainTitle ?
+      <View>
+        <Text style={styles.titleTex}>{mainTitle}</Text>
+        <Text style={styles.subTitleText}>{subTite}</Text>
+      </View>
+      :
+      <View >
+        {mainData}
+      </View>
+    }
     </View>
     <View style={styles.rightData}>
       {rightData}

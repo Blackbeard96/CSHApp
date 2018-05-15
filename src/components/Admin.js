@@ -20,9 +20,18 @@ class Admin extends Component {
     this.dataSource = ds.cloneWithRows(quiz);
   }
   renderRow (data) {
+    const { navigate } = this.props.navigation;
     return (
       <ListItem
-        mainTitle = {data.name}
+        mainData = {
+          <TouchableOpacity onPress={() => {navigate('QuizForm', {id: data.id});}}>
+            <View>
+              <Text>
+                {data.name}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        }
         leftData = {
           <TouchableOpacity onPress={() => this.props.deleteQuiz(data.id)}>
             <View>
@@ -56,7 +65,7 @@ class Admin extends Component {
           />
           <Button
 className = "menuBox" title = {'Create Quiz'} onPress={() =>
-          navigate('CreateQuiz')
+          navigate('QuizForm')
         } />
       </View>
     );
