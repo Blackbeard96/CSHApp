@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, ListView, TouchableOpacity, View, Image} from 'react-native';
 import { connect } from 'react-redux';
 import {InputRow, Card, CardSection, ListItem} from './common';
-import {createQuiz, editName, removeQuestion, fetchQuiz} from '../actions';
+import {createQuiz, editName, removeQuestion, fetchQuiz, clearForms} from '../actions';
 import NewQuestionForm from './NewQuestionForm';
 
 class QuizForm extends Component {
@@ -11,6 +11,9 @@ class QuizForm extends Component {
     this.props.fetchQuiz(this.props.quizId);
     }
     this.createDataSource(this.props);
+  }
+  componentWillUnmount() {
+    this.props.clearForms();
   }
   componentWillReceiveProps(nextProps){
     this.createDataSource(nextProps);
@@ -76,7 +79,8 @@ class QuizForm extends Component {
 
 const mapState = (state, ownProps) => {
   let {qTitle, questions} = state.quizForm;
-  return {qTitle, questions, quizId: ownProps.navigation.state.params.id || null};
+  let quizId = ownProps.navigation.state.params ? ownProps.navigation.state.params.id : null;
+  return {qTitle, questions, quizId};
 };
 
-export default connect(mapState, {createQuiz, editName, removeQuestion, fetchQuiz})(QuizForm);
+export default connect(mapState, {createQuiz, editName, removeQuestion, fetchQuiz, clearForms})(QuizForm);

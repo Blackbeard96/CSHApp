@@ -59,3 +59,8 @@ export const fetchQuiz = qId => dispatch => {
   .catch(err => console.log('Error getting quiz', err));
 
 }
+
+export const clearForms = () => dispatch => {
+  dispatch(clearQuestionForm());
+  dispatch(clearQuizForm());
+}
