@@ -36,11 +36,10 @@ const getQuestionRefs = questions => {
 
 export const postQuiz = (name, questions) => dispatch => {
   const db = firebase.firestore();
-  db.collection('Quiz').doc(`${name}`).set({name, questions: []})
-  .then(() => getQuestionRefs(questions)
-  )
-  .then(questionReferences => {
-    db.collection('Quiz').doc(`${name}`).update({questions: questionReferences});
+  const questionReferences = getQuestionRefs(questions);
+  db.collection('Quiz').add({name})
+  .then(quizRef => {
+    quizRef.update({questions: questionReferences});
   })
   .then(() => {
     dispatch(saveQuiz());
@@ -51,15 +50,18 @@ export const postQuiz = (name, questions) => dispatch => {
 
 export const putQuiz = (id, update) => dispatch => {
   const db = firebase.firestore();
+  update.questions = getQuestionRefs(update.questions);
+
   db.collection('Quiz').doc(`${id}`).get()
   .then(() => {
-    if (update.questions) {
-      update.questions = getQuestionRefs(update.questions);
-    }
+    update.questions = getQuestionRefs(update.questions);
   })
   .then(() => db.collection('Quiz').doc(`${id}`).update(update)
   )
-  .then(() => dispatch(updatingQuiz()))
+  .then(() => {
+    dispatch(updatingQuiz());
+    dispatch(clearQuizForm());
+  })
   .catch(err => console.log('Error updating Quiz', err));
 };
 
