@@ -10,7 +10,7 @@ export const EDIT_FORM = 'EDIT_FORM';
 export const GET_QUESTIONS = 'GET_QUESTIONS';
 export const GET_QUIZZES = 'GET_QUIZZES';
 export const DELETE_QUIZ = 'DELETE_QUIZ';
-export const GET_QUIZ = 'GET_QUIZ';
+export const UPDATED_QUIZ = 'UPDATED_QUIZ';
 
 
 //QuizForm actions

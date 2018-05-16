@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {CardSection} from './CardSection';
 
-const ListItem = ({leftData, mainTitle, mainData, subTite, rightData, style}) => (
+const ListItem = ({leftData, mainTitle, mainData, subTitle, rightData, style}) => (
   <CardSection style = {[styles.container, style]}>
     <View style={styles.leftData}>
       {leftData}
@@ -12,7 +12,7 @@ const ListItem = ({leftData, mainTitle, mainData, subTite, rightData, style}) =>
       mainTitle ?
       <View>
         <Text style={styles.titleTex}>{mainTitle}</Text>
-        <Text style={styles.subTitleText}>{subTite}</Text>
+        <Text style={styles.subTitleText}>{subTitle}</Text>
       </View>
       :
       <View >
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   titleTex: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   subTitleText: {

@@ -1,19 +1,12 @@
-import {SAVE_QUIZ, TITLE_QUIZ, ADD_QUESTION, REMOVE_QUESTION, CLEAR_QUIZ_FORM, GET_QUIZ} from '../actions/types';
+import {SAVE_QUIZ, TITLE_QUIZ, ADD_QUESTION, REMOVE_QUESTION, CLEAR_QUIZ_FORM, UPDATED_QUIZ} from '../actions/types';
 const defaultState = {
   qTitle: '',
-  questions: [],
-  update: false
+  questions: []
 };
 
 
 export default function (state = defaultState, action) {
   switch (action.type) {
-    case GET_QUIZ:
-      return {
-        qTitle: action.payload.title,
-        questions: action.payload.questions,
-        update: true
-      }
     case TITLE_QUIZ:
       return {...state, qTitle:action.payload};
     case ADD_QUESTION:
@@ -26,6 +19,7 @@ export default function (state = defaultState, action) {
     case CLEAR_QUIZ_FORM:
     case SAVE_QUIZ:
       return defaultState;
+    case UPDATED_QUIZ:
     default:
       return state;
   }
