@@ -2,8 +2,8 @@ import React from 'react';
 import {Text, View, Modal, Button} from 'react-native';
 import {CardSection} from './CardSection';
 
-const PopUp = ({children, visible, onAccept}) => {
-  const {textStyle, containterStyle, cardSectionStyle} = styles;
+const PopUp = ({children, visible, acceptText, onAccept, onCancel}) => {
+  const {textStyle, containterStyle, cardSectionStyle, choiceStyle} = styles;
   return (
     <Modal
       visible={visible}
@@ -15,11 +15,15 @@ const PopUp = ({children, visible, onAccept}) => {
       <CardSection style={cardSectionStyle}>
           {children}
       </CardSection>
-      <CardSection>
-        <Button onPress={onAccept}>
-          OK
-        </Button>
-
+      <CardSection style={choiceStyle}>
+        <Button
+          title = {acceptText}
+          onPress={onAccept}
+          />
+        <Button
+          title = "Cancel"
+          onPress = {onCancel}
+          />
       </CardSection>
     </View>
     </Modal>
@@ -28,7 +32,8 @@ const PopUp = ({children, visible, onAccept}) => {
 
 const styles = {
   cardSectionStyle: {
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexDirection: 'column'
   },
   textStyle: {
     flex: 1,
@@ -41,7 +46,11 @@ const styles = {
     position: 'relative',
     flex: 1,
     justifyContent: 'center'
+  },
+  choiceStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
-}
+};
 
 export {PopUp};
