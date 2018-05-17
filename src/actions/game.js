@@ -19,12 +19,12 @@ export const enterRoom = () => dispatch => {
   realTimeDb.ref('/activeGame').once('value')
   .then(dbRef => {
     let data = dbRef.val();
-    if (data.started) {
-      realTimeDb.ref('/attendees' + user).set({inGame: false});
-    }
-    else {
-      realTimeDb.ref('/attendees' + user).set({inGame: true});
-    }
+    // if (data.started) {
+    //   realTimeDb.ref('/attendees' + user).set({inGame: false});
+    // }
+    // else {
+    //   realTimeDb.ref('/attendees' + user).set({inGame: true});
+    // }
     dispatch(getUserCount(data.players));
     return data;
   })
@@ -42,7 +42,7 @@ export const enterRoom = () => dispatch => {
 export const exitRoom = () => dispatch => {
   const {user} = firebase.auth();
   const realTimeDb = firebase.database();
-  realTimeDb.ref('/attendees').doc(user).set({inGame: false});
+  // realTimeDb.ref('/attendees').doc(user).set({inGame: false});
   realTimeDb.ref('/activeGame/activeQuestion').off();
   dispatch(leave());
 
@@ -55,7 +55,7 @@ export const submitAnswer = choice => dispatch => {
   realTimeDb.ref('/activeGame/activeQuestion/answer').once('value')
   .then(snapShot => {
     if (choice != snapShot.val()) {
-      realTimeDb.ref('/attendees').doc(user).set({inGame: false});
+      // realTimeDb.ref('/attendees').doc(user).set({inGame: false});
       getStanding(false);
     }
   });
