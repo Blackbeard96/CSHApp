@@ -2,14 +2,17 @@ import React from 'react';
 import {Text, View} from 'react-native';
 
 
-
-const Header = ({label}) => {
+const Header = ({label, children}) => {
   const {textStyle, viewStyle} = styles;
-  return (
-    <View style={viewStyle}>
+    let val = label ?
+    (<View style={viewStyle}>
       <Text style={textStyle}>{label}</Text>
-    </View>
-  );
+    </View>)
+    :
+    (<View style={viewStyle}>
+      {children}
+    </View>);
+  return val;
 };
 
 const styles = {

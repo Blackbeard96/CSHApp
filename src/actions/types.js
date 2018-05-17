@@ -30,7 +30,9 @@ export const CLEAR_QUESTION_FORM = 'CLEAR_QUESTION_FORM';
 export const TRACK_QUESTION = 'TRACK_QUESTION';
 export const CHOOSE_ANSWER = 'CHOOSE_ANSWER';
 export const GET_USER_COUNT = 'GET_USER_COUNT';
-export const ENTER_EXIT_ROOM = 'ENTER_EXIT_ROOM';
+export const ENTER_ROOM = 'ENTER_ROOM';
+export const EXIT_ROOM = 'EXIT_ROOM';
+export const UPDATE_STANDING = 'UPDATE_STANDING';
 
 
 //Admin Game actions

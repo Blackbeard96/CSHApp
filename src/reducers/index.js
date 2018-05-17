@@ -3,6 +3,7 @@ import auth from './auth';
 import questionForm from './questionForm';
 import quizForm from './quizForm';
 import qList from './qList';
+import game from './game';
 
 
 // export default combineReducers({
@@ -14,7 +15,8 @@ export default function getRootReducer(navReducer) {
     auth,
     quizForm,
     qList,
-    questionForm
+    questionForm,
+    game
   });
 }
 
@@ -23,3 +25,4 @@ export * from './auth';
 export * from './questionForm';
 export * from './quizForm';
 export * from './qList';
+export * from './game';
