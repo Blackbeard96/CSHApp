@@ -11,8 +11,7 @@ export const fetchQuizzes = () => dispatch => {
   .onSnapshot(function(querySnapshot) {
     var quizzes = [];
     querySnapshot.forEach(function(doc) {
-      // console.log(doc)
-        quizzes.push({id: doc.id, name: doc.data().name});
+        quizzes.push({id: doc.id, name: doc.data().name, questons: doc.questions});
     });
     dispatch(getQuizzes(quizzes));
   });
@@ -24,3 +23,4 @@ export const deleteQuiz = id => dispatch => {
   .then(() => dispatch(destroyQuiz()))
   .catch(err => console.log('Error deleting quiz', err));
 };
+

@@ -1,29 +1,48 @@
 import React, {Component} from 'react';
 import Question from './Question';
 import {View, Text, Button} from 'react-native';
-import firebase from 'firebase';
+import {connect} from 'react-redux';
+import {enterRoom, exitRoom, submitAnswer} from '../actions';
+import {Header} from './common';
 
 class Quiz extends Component{
-  // seedQuestions(){
-  //   const db = firebase.firestore();
-  // quizQuestions.forEach(item => {
-  //   db.collection('Questions').add(item)
-  // })
-  // }
+  componentWillMount() {
+    this.props.enterRoom();
+  }
+  componentWillUnmount() {
+    this.props.exitRoom();
+  }
   render(){
+    console.log('this.props', this.props)
     return (
       <View style={{flex: 1}}>
-          <Question
-            key={quizQuestions[0].question}
-            question = {quizQuestions[0].question}
-            choices = {quizQuestions[0].choices}
-          />
+        <Header>
+          <Text> {this.props.players} </Text>
+            <Text> Comp Sci High Quiz </Text>
+        </Header>
+        <Question
+          // key={quizQuestions[0].question}
+          // question = {quizQuestions[0].question}
+          // choices = {quizQuestions[0].choices}
+          question = {this.props.question}
+          choices = {this.props.choices}
+          bulletEnum = {['1', '2', '3', '4']}
+          onChoose = {(val) => {this.props.submitAnswer(val);}}
+        />
       </View>
     );
   }
 }
 
-export default Quiz;
+const mapState = state => {
+  let {question, choices, players, out} = state.game;
+  return {question, choices, players, out};
+};
+
+const mapDispatch = {enterRoom, exitRoom, submitAnswer};
+
+export default connect(mapState, mapDispatch)(Quiz);
+
 
 const quizQuestions = [
   {
@@ -89,3 +108,10 @@ const quizQuestions = [
     choices: [ 1968, 1978, 1988]
   }
 ];
+
+  // seedQuestions(){
+  //   const db = firebase.firestore();
+  // quizQuestions.forEach(item => {
+  //   db.collection('Questions').add(item)
+  // })
+  // }

@@ -2,12 +2,18 @@ import React, {Component} from 'react';
 import {Button, ListView, TouchableOpacity, View, Image} from 'react-native';
 import { connect } from 'react-redux';
 import {InputRow, Card, CardSection, ListItem} from './common';
-import {createQuiz, editName, removeQuestion} from '../actions';
+import {postQuiz, editName, removeQuestion, fetchQuiz, clearForms, putQuiz} from '../actions';
 import NewQuestionForm from './NewQuestionForm';
 
 class QuizForm extends Component {
   componentWillMount() {
+    if (this.props.quizId) {
+    this.props.fetchQuiz(this.props.quizId);
+    }
     this.createDataSource(this.props);
+  }
+  componentWillUnmount() {
+    this.props.clearForms();
   }
   componentWillReceiveProps(nextProps){
     this.createDataSource(nextProps);
@@ -18,7 +24,7 @@ class QuizForm extends Component {
     });
     this.dataSource = ds.cloneWithRows(questions);
   }
-  renderRow(item,sId, rId) {
+  renderRow(item, sId, rId) {
     return (
       <ListItem
         style= {{maxHeight: 70}}
@@ -38,7 +44,7 @@ class QuizForm extends Component {
     );
   }
   render () {
-    let {editName, createQuiz, qTitle, questions} = this.props;
+    let {editName, postQuiz, qTitle, questions, quizId, putQuiz} = this.props;
     return (
       <Card>
         <CardSection>
@@ -60,10 +66,18 @@ class QuizForm extends Component {
           <NewQuestionForm />
         </CardSection>
         <CardSection>
+         {
+           quizId ?
+           <Button
+            onPress = {() => putQuiz(quizId, {name: qTitle, questions})}
+            title = "Update"
+          />
+           :
           <Button
-            onPress = {() => createQuiz(qTitle, questions)}
+            onPress = {() => postQuiz(qTitle, questions)}
             title = "Create"
           />
+         }
         </CardSection>
       </Card>
     );
@@ -71,9 +85,11 @@ class QuizForm extends Component {
 }
 
 
-const mapState = state => {
+const mapState = (state, ownProps) => {
   let {qTitle, questions} = state.quizForm;
-  return {qTitle, questions};
+  let quizId = ownProps.navigation.state.params ? ownProps.navigation.state.params.id : null;
+  return {qTitle, questions, quizId};
 };
+const mapDispatch = {postQuiz, editName, removeQuestion, fetchQuiz, clearForms, putQuiz};
 
-export default connect(mapState, {createQuiz, editName, removeQuestion})(QuizForm);
+export default connect(mapState, mapDispatch)(QuizForm);

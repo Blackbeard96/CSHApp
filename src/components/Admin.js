@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
 import {View, Text, Button, ListView, TouchableOpacity, Image} from 'react-native';
 import {connect} from 'react-redux';
-import {fetchQuizzes, deleteQuiz} from '../actions';
-import {Header, ListItem, LogoBackgroundView} from './common';
+import {fetchQuizzes, deleteQuiz, openRoom, fetchQuiz, clearForms, beginQuiz} from '../actions';
+import {Header, ListItem, LogoBackgroundView, PopUp} from './common';
 
 
 class Admin extends Component {
+  constructor() {
+    super();
+    this.state = {
+      visiblePopUp: false
+    };
+  }
   componentWillMount() {
     this.props.fetchQuizzes();
     this.createDataSource(this.props);
@@ -20,9 +26,18 @@ class Admin extends Component {
     this.dataSource = ds.cloneWithRows(quiz);
   }
   renderRow (data) {
+    const { navigate } = this.props.navigation;
     return (
       <ListItem
-        mainTitle = {data.name}
+        mainData = {
+          <TouchableOpacity onPress={() => {navigate('QuizForm', {id: data.id});}}>
+            <View>
+              <Text>
+                {data.name}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        }
         leftData = {
           <TouchableOpacity onPress={() => this.props.deleteQuiz(data.id)}>
             <View>
@@ -34,7 +49,13 @@ class Admin extends Component {
           </TouchableOpacity>
         }
         rightData = {
-          <TouchableOpacity style={{flex: 1}} onPress = {() => {console.log('Starting Quiz');}} >
+          <TouchableOpacity
+            style={{flex: 1}}
+            onPress = {() => {
+              this.props.openRoom(data.id);
+              this.showPopUp(data.id, data.name, data.questions);
+            }}
+            >
             <LogoBackgroundView>
               <Text> Start </Text>
             </LogoBackgroundView>
@@ -42,6 +63,17 @@ class Admin extends Component {
         }
       />
     );
+  }
+  showPopUp(id, questionTitle, questions) {
+    this.props.fetchQuiz(id);
+    this.setState({visiblePopUp: true});
+  }
+  closePopUp(canceled) {
+    this.setState({visiblePopUp: false});
+    this.props.clearForms();
+    if (!canceled) {
+      this.props.beginQuiz();
+    }
   }
 
   render () {
@@ -56,16 +88,36 @@ class Admin extends Component {
           />
           <Button
 className = "menuBox" title = {'Create Quiz'} onPress={() =>
-          navigate('CreateQuiz')
+          navigate('QuizForm')
         } />
+        <PopUp
+          visible = {this.state.visiblePopUp}
+          acceptText = {'Start Quiz'}
+          onAccept = {() => this.closePopUp(true)}
+          onCancel = {() => this.closePopUp(false)}
+          >
+            <Text> {this.props.selectedTitle} </Text>
+          <ListView
+            enableEmptySections
+            dataSource = {
+              new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+              }).cloneWithRows(this.props.selectedQuestions)
+            }
+            renderRow = {data => <Text>{data.question}</Text>}
+          />
+        </PopUp>
       </View>
     );
   }
 }
 
-const mapState = state => {
-return ({quiz: state.qList});
-};
+const mapState = state => ({quiz: state.qList,
+  selectedTitle: state.quizForm.qTitle,
+  selectedQuestions: state.quizForm.questions
+});
+
+const mapDispatch = {fetchQuizzes, deleteQuiz, openRoom, fetchQuiz, clearForms, beginQuiz};
 
 
-export default connect(mapState, {fetchQuizzes, deleteQuiz})(Admin);
+export default connect(mapState, mapDispatch)(Admin);
