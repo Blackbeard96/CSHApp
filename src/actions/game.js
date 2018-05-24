@@ -14,17 +14,18 @@ const leave = () => ({type: EXIT_ROOM});
 
 export const enterRoom = () => dispatch => {
   dispatch(rollCall());
-  const {user} = firebase.auth();
+  const user = firebase.auth().currentUser.uid;
+
   const realTimeDb = firebase.database();
   realTimeDb.ref('/activeGame').once('value')
   .then(dbRef => {
     let data = dbRef.val();
-    // if (data.started) {
-    //   realTimeDb.ref('/attendees' + user).set({inGame: false});
-    // }
-    // else {
-    //   realTimeDb.ref('/attendees' + user).set({inGame: true});
-    // }
+    if (data.started) {
+      realTimeDb.ref('/attendees/' + user).set({inGame: false});
+    }
+    else {
+      realTimeDb.ref('/attendees/' + user).set({inGame: true});
+    }
     dispatch(getUserCount(data.players));
     return data;
   })
@@ -40,22 +41,23 @@ export const enterRoom = () => dispatch => {
 };
 
 export const exitRoom = () => dispatch => {
-  const {user} = firebase.auth();
+  const currentUser = firebase.auth().currentUser.uid;
+
   const realTimeDb = firebase.database();
-  // realTimeDb.ref('/attendees').doc(user).set({inGame: false});
+  realTimeDb.ref('/attendees/' + currentUser).set({inGame: false});
   realTimeDb.ref('/activeGame/activeQuestion').off();
   dispatch(leave());
 
 };
 
 export const submitAnswer = choice => dispatch => {
-  const {user} = firebase.auth();
+  const currentUser = firebase.auth().currentUser.uid;
   const realTimeDb = firebase.database();
   dispatch(chooseAnswer());
   realTimeDb.ref('/activeGame/activeQuestion/answer').once('value')
   .then(snapShot => {
     if (choice != snapShot.val()) {
-      // realTimeDb.ref('/attendees').doc(user).set({inGame: false});
+      realTimeDb.ref('/attendees').doc(currentUser).set({inGame: false});
       getStanding(false);
     }
   });
