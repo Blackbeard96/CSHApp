@@ -16,17 +16,20 @@ import {
   TextInput,
 } from 'react-native';
 
-
+import {connect} from 'react-redux';
+import {autoLogin} from './actions';
 import {pushNotifications} from './services';
+
 
 pushNotifications.configure();
 pushNotifications.register();
 
 
 type Props = {};
-export default class App extends Component<Props> {
+class App extends Component<Props> {
   render() {
     const { navigate } = this.props.navigation;
+    this.props.autoLogin();
     return (
       <View style={styles.container}>
         <Image
@@ -96,3 +99,5 @@ const styles = StyleSheet.create({
   }
 
 });
+
+export default connect(null, {autoLogin})(App);

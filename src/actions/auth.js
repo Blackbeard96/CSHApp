@@ -11,7 +11,6 @@ const inputText = change => ({type: EDIT_FORM, payload: change });
 const completeLogin = (dispatch, {email, password}) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(() => {
-    AsyncStorage.setItem('CSHAPP-Login', JSON.stringify({email, password}), () => {});
     dispatch(login());
   })
   .catch(err => {
@@ -22,6 +21,7 @@ const completeLogin = (dispatch, {email, password}) => {
 };
 
 export const userLogin = (email, password) => dispatch => {
+  AsyncStorage.setItem('CSHAPP-Login', JSON.stringify({email, password}), () => {});
   completeLogin(dispatch, {email, password});
 };
 
@@ -34,6 +34,8 @@ export const autoLogin = () => dispatch => {
     }
   });
 };
+
+export const isLoggedIn = () => firebase.auth().currentUser.uid || false;
 
 
 export const userLogout = () => dispatch => {
