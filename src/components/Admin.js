@@ -69,10 +69,13 @@ class Admin extends Component {
     this.setState({visiblePopUp: true});
   }
   closePopUp(canceled) {
+    const { navigate } = this.props.navigation;
+
     this.setState({visiblePopUp: false});
     this.props.clearForms();
     if (!canceled) {
       this.props.beginQuiz();
+      navigate('QuizControl');
     }
   }
 

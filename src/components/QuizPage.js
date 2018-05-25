@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Question from './Question';
+import Question from './QuestionCard';
 import {View, Text, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {enterRoom, exitRoom, submitAnswer} from '../actions';

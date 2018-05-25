@@ -79,7 +79,7 @@ export const openRoom = quizId => dispatch => {
       realTimeDb.ref('/activeGame').set({
         name: quiz.name,
         questionCount: quiz.questions.length,
-        currentQuestionIndex: 0,
+        currentQuestionIndex: -1,
         started: false,
         quizId: quizData.id,
         activeQuestion: {},
@@ -92,7 +92,7 @@ export const openRoom = quizId => dispatch => {
     return questions.map((ref, index) => {
       return ref.get()
       .then(val =>
-        realTimeDb.ref(`/activeQuestions/${index}`).add(val.data())
+        realTimeDb.ref('/activeQuestions').child(index).set(val.data())
       );
     });
   })
@@ -103,7 +103,6 @@ export const openRoom = quizId => dispatch => {
   });
 };
 
-
 export const beginQuiz = () => dispatch => {
   const realTimeDb = firebase.database();
   realTimeDb.ref('/activeGame').update({started: true})
@@ -113,11 +112,19 @@ export const beginQuiz = () => dispatch => {
 
 export const nextQuestion = () => dispatch => {
   const realTimeDb = firebase.database();
-  realTimeDb.ref('/activeGame/currentQuestionIndex').get()
+  realTimeDb.ref('/activeGame/currentQuestionIndex').once('value')
+  .then(snapshot => {
+    const index = snapshot.val() + 1;
+    realTimeDb.ref('/activeGame/currentQuestionIndex').set(index);
+    return index;
+  })
+  .then(index => {
+    // const index = snapshot.val();
+    return realTimeDb.ref('/activeQuestions/').child(index).once('value');
+  })
+  .then(questionSnapshot => {
+    const question = questionSnapshot.val();
+    return realTimeDb.ref('/activeGame/activeQuestion').set(question);
+  })
+  .catch(err => console.log("Error switching questions", err));
 };
-
-// const realTimeDb = firebase.database();
-// realTimeDb.ref('/activeGame/currentQuestionIndex').get()
-// .then(idx => {
-//   console.log()
-// })
