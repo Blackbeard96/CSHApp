@@ -13,7 +13,6 @@ class Quiz extends Component{
     this.props.exitRoom();
   }
   render(){
-    console.log('this.props', this.props)
     return (
       <View style={{flex: 1}}>
         <Header>
