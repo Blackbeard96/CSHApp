@@ -6,10 +6,11 @@ import {firebaseData} from '../secrets';
 
 import {pushNotifications} from './services';
 import { createStackNavigator, addNavigationHelpers } from 'react-navigation';
-import { YellowBox } from 'react-native';
+import { YellowBox, View} from 'react-native';
 import Routes from './Routes';
 import getStore from './store';
 import {autoLogin} from './actions';
+import {Spinner} from './components/common';
 
 pushNotifications.configure();
 pushNotifications.register();

@@ -16,8 +16,10 @@ import {
   TextInput,
 } from 'react-native';
 
+import {connect} from 'react-redux';
 import {autoLogin} from './actions';
 import {pushNotifications} from './services';
+import {Spinner} from './components/common';
 
 
 pushNotifications.configure();
@@ -25,7 +27,7 @@ pushNotifications.register();
 
 
 type Props = {};
-export default class App extends Component<Props> {
+class App extends Component<Props> {
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -35,8 +37,13 @@ export default class App extends Component<Props> {
           style={styles.bkg}
         />
 
+      {
+        this.props.loading ?
+        <View style={{ width: '100%'}} >
+        <Spinner />
+        </View>
+        :
         <View style={styles.menuBar}>
-
           <Button className = "menuBox" title = {"ProfileImage"} onPress={() =>
           navigate('Login')
         } style={styles.profile}/>
@@ -54,7 +61,7 @@ export default class App extends Component<Props> {
 
        </View>
 
-
+      }
       </View>
     );
   }
@@ -97,4 +104,5 @@ const styles = StyleSheet.create({
   }
 
 });
-
+const mapState = ({auth}) => ({loading: auth.loading})
+export default connect(mapState, null)(App);

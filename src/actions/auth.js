@@ -1,4 +1,4 @@
-import {LOGIN_ATTEMPT, LOGOUT, SUCCESSFUL_LOGIN, EDIT_FORM, LOGIN_FAIL} from './types';
+import {LOGIN_ATTEMPT, LOGOUT, SUCCESSFUL_LOGIN, EDIT_FORM, LOGIN_FAIL, LOADING_AUTH} from './types';
 import firebase from 'firebase';
 import {AsyncStorage} from 'react-native';
 
@@ -6,9 +6,11 @@ const login = () => ({type: SUCCESSFUL_LOGIN});
 const logout = () => ({type: LOGOUT});
 const failedLogin = err => ({type: LOGIN_FAIL, payload: err});
 const inputText = change => ({type: EDIT_FORM, payload: change });
+const loading = () => ({type: LOGIN_ATTEMPT});
 
 
 const completeLogin = (dispatch, {email, password}) => {
+  dispatch(loading());
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(() => {
     dispatch(login());
