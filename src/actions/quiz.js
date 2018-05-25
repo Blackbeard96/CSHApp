@@ -5,7 +5,7 @@ const getQuizzes = quizData => ({type: GET_QUIZZES, payload: quizData});
 const destroyQuiz = () => ({type: DELETE_QUIZ});
 
 export const fetchQuizzes = () => dispatch => {
-  const currentUser = firebase.auth().currentUser.uid;
+  // const currentUser = firebase.auth().currentUser.uid;
   const db = firebase.firestore();
   db.collection('Quiz')
   .onSnapshot(function(querySnapshot) {

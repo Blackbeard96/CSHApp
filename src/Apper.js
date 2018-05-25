@@ -9,6 +9,7 @@ import { createStackNavigator, addNavigationHelpers } from 'react-navigation';
 import { YellowBox } from 'react-native';
 import Routes from './Routes';
 import getStore from './store';
+import {autoLogin} from './actions';
 
 pushNotifications.configure();
 pushNotifications.register();
@@ -28,9 +29,9 @@ const navReducer = (state, action) => {
   return newState || state;
 };
 
-connect(state => ({nav: state.nav}));
-class AppWithNavigationState extends Component {
+class TheAppWithNavigationState extends Component {
   render () {
+    this.props.autoLogin();
     return (
       <AppNavigator
         // navigation = {addNavigationHelpers({
@@ -41,6 +42,8 @@ class AppWithNavigationState extends Component {
     );
   }
 }
+let AppWithNavigationState =  connect(state => ({nav: state.nav}), {autoLogin})(TheAppWithNavigationState);
+
 
 const store = getStore(navReducer);
 
