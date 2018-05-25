@@ -14,7 +14,7 @@ const completeLogin = (dispatch, {email, password}) => {
     dispatch(login());
   })
   .catch(err => {
-    console.log(err)
+    console.log(err);
     dispatch(failedLogin(err.message));
     }
   );
