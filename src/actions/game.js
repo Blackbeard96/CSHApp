@@ -14,19 +14,19 @@ const leave = () => ({type: EXIT_ROOM});
 
 export const enterRoom = () => dispatch => {
   dispatch(rollCall());
-  const {user} = firebase.auth();
+  const user = firebase.auth().currentUser.uid;
+
   const realTimeDb = firebase.database();
   realTimeDb.ref('/activeGame').once('value')
   .then(dbRef => {
     let data = dbRef.val();
-    // if (data.started) {
-    //   realTimeDb.ref('/attendees' + user).set({inGame: false});
-    // }
-    // else {
-    //   realTimeDb.ref('/attendees' + user).set({inGame: true});
-    // }
+    if (data.started) {
+      realTimeDb.ref('/attendees/' + user).set({inGame: false});
+    }
+    else {
+      realTimeDb.ref('/attendees/' + user).set({inGame: true});
+    }
     dispatch(getUserCount(data.players));
-    return data;
   })
   .then(() => {
     realTimeDb.ref('/activeGame/activeQuestion')
@@ -40,22 +40,23 @@ export const enterRoom = () => dispatch => {
 };
 
 export const exitRoom = () => dispatch => {
-  const {user} = firebase.auth();
+  const currentUser = firebase.auth().currentUser.uid;
+
   const realTimeDb = firebase.database();
-  // realTimeDb.ref('/attendees').doc(user).set({inGame: false});
+  realTimeDb.ref('/attendees/' + currentUser).set({inGame: false});
   realTimeDb.ref('/activeGame/activeQuestion').off();
   dispatch(leave());
 
 };
 
 export const submitAnswer = choice => dispatch => {
-  const {user} = firebase.auth();
+  const currentUser = firebase.auth().currentUser.uid;
   const realTimeDb = firebase.database();
   dispatch(chooseAnswer());
   realTimeDb.ref('/activeGame/activeQuestion/answer').once('value')
   .then(snapShot => {
     if (choice != snapShot.val()) {
-      // realTimeDb.ref('/attendees').doc(user).set({inGame: false});
+      realTimeDb.ref('/attendees').doc(currentUser).set({inGame: false});
       getStanding(false);
     }
   });
@@ -66,7 +67,7 @@ const clearActive = () => {
   const realTimeDb = firebase.database();
   realTimeDb.ref('/activeGame').remove();
   realTimeDb.ref('/activeQuestions').remove();
-}
+};
 
 export const openRoom = quizId => dispatch => {
   clearActive();
@@ -88,10 +89,10 @@ export const openRoom = quizId => dispatch => {
   })
   .then(quizData => {
     const questions = quizData.data().questions;
-    return questions.map(ref => {
+    return questions.map((ref, index) => {
       return ref.get()
       .then(val =>
-        realTimeDb.ref('/activeQuestions').push(val.data())
+        realTimeDb.ref(`/activeQuestions/${index}`).add(val.data())
       );
     });
   })
@@ -104,14 +105,19 @@ export const openRoom = quizId => dispatch => {
 
 
 export const beginQuiz = () => dispatch => {
-  // const realTimeDb = firebase.database();
-  // realTimeDb.ref('/activeQuestions').get()
-  // .then(res => res.data())
-  // .then(questions => {
-  // })
-
-  // realTimeDb.ref('/activeGame').get()
-  // .then(res => res.data())
-  // .then(quizInfo => {
-  // })
+  const realTimeDb = firebase.database();
+  realTimeDb.ref('/activeGame').update({started: true})
+  .then()
+  .catch(err => console.log('Error starting Quiz', err));
 };
+
+export const nextQuestion = () => dispatch => {
+  const realTimeDb = firebase.database();
+  realTimeDb.ref('/activeGame/currentQuestionIndex').get()
+};
+
+// const realTimeDb = firebase.database();
+// realTimeDb.ref('/activeGame/currentQuestionIndex').get()
+// .then(idx => {
+//   console.log()
+// })

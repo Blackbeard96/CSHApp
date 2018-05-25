@@ -93,8 +93,8 @@ className = "menuBox" title = {'Create Quiz'} onPress={() =>
         <PopUp
           visible = {this.state.visiblePopUp}
           acceptText = {'Start Quiz'}
-          onAccept = {() => this.closePopUp(true)}
-          onCancel = {() => this.closePopUp(false)}
+          onAccept = {() => this.closePopUp(false)}
+          onCancel = {() => this.closePopUp(true)}
           >
             <Text> {this.props.selectedTitle} </Text>
           <ListView
