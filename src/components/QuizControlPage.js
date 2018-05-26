@@ -7,8 +7,8 @@ import {nextQuestion} from '../actions';
 class QuizControl extends Component {
   render() {
     return (
-    <View>
-      <View style={{backgroundColor: 'blue'}}>
+    <View style={{flexDirection: 'column'}}>
+      <View>
       <QuizPage />
       </View>
       <View style={{backgroundColor: 'red'}}>

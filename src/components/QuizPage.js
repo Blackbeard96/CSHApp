@@ -3,7 +3,7 @@ import Question from './QuestionCard';
 import {View, Text, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {enterRoom, exitRoom, submitAnswer} from '../actions';
-import {Header} from './common';
+import {Header, CardSection} from './common';
 
 class Quiz extends Component{
   componentWillMount() {
@@ -15,10 +15,10 @@ class Quiz extends Component{
   render(){
     return (
       <View style={{flex: 1}}>
-        <Header>
-          <Text> {this.props.players} </Text>
+        <CardSection style={{flexDirection: 'column'}}>
             <Text> Comp Sci High Quiz </Text>
-        </Header>
+            <Text> {this.props.players} / {this.props.idx} of {this.props.questionCount} </Text>
+        </CardSection>
         <Question
           // key={quizQuestions[0].question}
           // question = {quizQuestions[0].question}
@@ -34,8 +34,8 @@ class Quiz extends Component{
 }
 
 const mapState = state => {
-  let {question, choices, players, out} = state.game;
-  return {question, choices, players, out};
+  let {question, choices, players, out, idx, questionCount} = state.game;
+  return {question, choices, players, out, idx, questionCount};
 };
 
 const mapDispatch = {enterRoom, exitRoom, submitAnswer};
