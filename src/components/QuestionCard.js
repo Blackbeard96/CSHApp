@@ -30,7 +30,6 @@ const Question = ({question, choices, bulletEnum, onChoose}) => {
 
 const styles = {
   cardStyle: {
-    flex: 1,
     width: '100%'
   },
   questionTextStyle: {

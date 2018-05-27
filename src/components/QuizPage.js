@@ -14,7 +14,7 @@ class Quiz extends Component{
   }
   render(){
     return (
-      <View style={{flex: 1}}>
+      <View>
         <CardSection style={{flexDirection: 'column'}}>
             <Text> Comp Sci High Quiz </Text>
             <Text> {this.props.players} / {this.props.idx} of {this.props.questionCount} </Text>
