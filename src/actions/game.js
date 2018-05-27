@@ -151,7 +151,14 @@ export const nextQuestion = () => dispatch => {
   })
   .then(questionSnapshot => {
     const question = questionSnapshot.val();
-    return realTimeDb.ref('/activeGame/activeQuestion').set(question);
+    realTimeDb.ref('/activeGame/activeQuestion').set(question);
+    return question.choices.length;
+  })
+  .then(amt => {
+    console.log('Amt', amt);
+    let holder = new Array(amt);
+    holder.fill(0);
+    realTimeDb.ref('/activeGame/answersCount').set(holder);
   })
   .catch(err => console.log('Error switching questions', err));
 };
