@@ -10,7 +10,7 @@ const QuizControl = (props) => {
       <View style={{flex: 2}}>
       <QuizPage />
       </View>
-      <View style={{backgroundColor: 'red', flex: 1}}>
+      <View style={{flex: 1}}>
         props.lastQuestion ?
         <Button
           onPress = {() => {props.nextQuestion();}}

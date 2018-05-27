@@ -62,9 +62,8 @@ export const enterRoom = () => dispatch => {
 
 export const exitRoom = () => dispatch => {
   const currentUser = firebase.auth().currentUser.uid;
-
   const realTimeDb = firebase.database();
-  realTimeDb.ref('/attendees/' + currentUser).set({inGame: false});
+  realTimeDb.ref('/attendees/' + currentUser).remove();
   realTimeDb.ref('/activeGame/activeQuestion').off();
   dispatch(leave());
 
@@ -127,7 +126,9 @@ export const openRoom = quizId => dispatch => {
 export const beginQuiz = () => dispatch => {
   const realTimeDb = firebase.database();
   realTimeDb.ref('/activeGame').update({started: true})
-  .then()
+  .then(
+    nextQuestion()
+  )
   .catch(err => console.log('Error starting Quiz', err));
 };
 
