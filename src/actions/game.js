@@ -1,4 +1,4 @@
-import { TRACK_QUESTION, CHOOSE_ANSWER, GET_USER_COUNT, OPEN_ROOM, START_GAME, UPDATE_STANDING, ENTER_ROOM, EXIT_ROOM, GET_QUESTION_COUNT, GET_QUESTION_NUMBER } from './types';
+import { TRACK_QUESTION, CHOOSE_ANSWER, GET_USER_COUNT, OPEN_ROOM, START_GAME, UPDATE_STANDING, ENTER_ROOM, EXIT_ROOM, GET_QUESTION_COUNT, GET_QUESTION_NUMBER, LAST_QUESTION } from './types';
 import firebase from 'firebase';
 
 
@@ -13,6 +13,7 @@ const rollCall = () => ({type: ENTER_ROOM});
 const leave = () => ({type: EXIT_ROOM});
 const getQuestionCount = count => ({type: GET_QUESTION_COUNT, payload: count});
 const trackQuestionNumber = number => ({type: GET_QUESTION_NUMBER, payload: number});
+const lastQuestion = () => ({type: LAST_QUESTION});
 
 export const enterRoom = () => dispatch => {
   dispatch(rollCall());
@@ -135,8 +136,8 @@ export const nextQuestion = () => dispatch => {
   realTimeDb.ref('/activeGame').once('value')
   .then(snapshot => {
     const {currentQuestionIndex, questionCount} = snapshot.val();
-    if (currentQuestionIndex + 1 == questionCount-1) {
-      // dispatch(lastQuestion());
+    if (currentQuestionIndex + 1 == questionCount - 1) {
+      dispatch(lastQuestion());
     }
     return currentQuestionIndex + 1;
   })
@@ -151,5 +152,5 @@ export const nextQuestion = () => dispatch => {
     const question = questionSnapshot.val();
     return realTimeDb.ref('/activeGame/activeQuestion').set(question);
   })
-  .catch(err => console.log("Error switching questions", err));
+  .catch(err => console.log('Error switching questions', err));
 };

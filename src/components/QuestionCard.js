@@ -3,12 +3,12 @@ import {View, Text, TouchableHighlight} from 'react-native';
 import {Card, CardSection} from './common';
 
 const Question = ({question, choices, bulletEnum, onChoose}) => {
-    const {cardStyle, questionTextStyle} = styles;
+    const {cardStyle, questionTextStyle, questionSectionStyle} = styles;
     if (!bulletEnum) {bulletEnum = ['A', 'B', 'C', 'D']}
     return (
     <View style={cardStyle} >
     <Card>
-      <CardSection style={{minHeight: 100}}>
+      <CardSection style={questionSectionStyle}>
         <Text style={questionTextStyle}>
           {question}
         </Text>
@@ -32,12 +32,18 @@ const styles = {
   cardStyle: {
     width: '100%'
   },
+  questionSectionStyle: {
+    minHeight: 40
+  },
   questionTextStyle: {
-    padding: 5,
-    fontSize: 20
+    padding: 2,
+    fontSize: 18
+  },
+  choiceSectionStyle: {
+    minHeight: 20
   },
   choiceStyle: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     padding: 10,
     alignItems: 'center'
@@ -57,9 +63,9 @@ const styles = {
 export default Question;
 
 const Choice = ({bulletPoint, text, onPress}) => {
-  const {choiceBulletStyle, choiceStyle} = styles;
+  const {choiceBulletStyle, choiceStyle, choiceSectionStyle} = styles;
   return (
-    <CardSection style={{height: 85}}>
+    <CardSection style={choiceSectionStyle}>
       <TouchableHighlight onPress = { () => {onPress(text)}} style={{flex: 1}}>
         <View style={choiceStyle}>
         <View style={choiceBulletStyle}>

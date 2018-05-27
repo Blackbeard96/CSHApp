@@ -41,3 +41,4 @@ export const GET_QUESTION_NUMBER = 'GET_QUESTION_NUMBER';
 export const START_GAME = 'START_GAME';
 export const OPEN_ROOM = 'OPEN_ROOM';
 export const VIEW_STATS = 'VIEW_STATS';
+export const LAST_QUESTION = 'LAST_QUESTION';

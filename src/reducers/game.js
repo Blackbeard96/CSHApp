@@ -1,4 +1,4 @@
-import { TRACK_QUESTION, CHOOSE_ANSWER, GET_USER_COUNT, UPDATE_STANDING, ENTER_ROOM, EXIT_ROOM, GET_QUESTION_COUNT, GET_QUESTION_NUMBER} from '../actions/types';
+import { TRACK_QUESTION, CHOOSE_ANSWER, GET_USER_COUNT, UPDATE_STANDING, ENTER_ROOM, EXIT_ROOM, GET_QUESTION_COUNT, GET_QUESTION_NUMBER, LAST_QUESTION} from '../actions/types';
 
 const defaultState = {
   question: '',
@@ -6,13 +6,14 @@ const defaultState = {
   out: false,
   players: 0,
   questionCount: 0,
-  idx: -1
+  idx: -1,
+  lastQuestion: false
 };
 
 export default function (state = defaultState, action) {
   switch (action.type) {
     case TRACK_QUESTION:
-      return {question: action.payload.question, choices: action.payload.choices};
+      return {...state, question: action.payload.question, choices: action.payload.choices};
     case UPDATE_STANDING:
       return {...state, out: true};
     case GET_USER_COUNT:
@@ -23,6 +24,8 @@ export default function (state = defaultState, action) {
       return defaultState;
     case GET_QUESTION_NUMBER:
       return {...state, idx: action.payload};
+    case LAST_QUESTION:
+      return {...state, lastQuestion: true};
     case CHOOSE_ANSWER:
     case ENTER_ROOM:
     default:
