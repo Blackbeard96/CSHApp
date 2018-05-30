@@ -3,7 +3,8 @@ import Question from './QuestionCard';
 import {View, Text, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {enterRoom, exitRoom, submitAnswer} from '../actions';
-import {Header, CardSection} from './common';
+import {CardSection, PopUp} from './common';
+import {ResultPage} from './ResultPage';
 
 class Quiz extends Component{
   componentWillMount() {
@@ -29,14 +30,22 @@ class Quiz extends Component{
           onChoose = {(val) => {
             this.props.submitAnswer(val);}}
         />
+        <PopUp
+          visible = {this.props.showResults}
+          acceptText
+          onAccept
+          onCancel
+        >
+        <ResultPage />
+        </PopUp>
       </View>
     );
   }
 }
 
 const mapState = state => {
-  let {question, choices, players, out, idx, questionCount} = state.game;
-  return {question, choices, players, out, idx, questionCount};
+  let {question, choices, players, out, idx, questionCount, showResults} = state.game;
+  return {question, choices, players, out, idx, questionCount, showResults};
 };
 
 const mapDispatch = {enterRoom, exitRoom, submitAnswer};

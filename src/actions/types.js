@@ -35,6 +35,7 @@ export const EXIT_ROOM = 'EXIT_ROOM';
 export const UPDATE_STANDING = 'UPDATE_STANDING';
 export const GET_QUESTION_COUNT = 'GET_QUESTION_COUNT';
 export const GET_QUESTION_NUMBER = 'GET_QUESTION_NUMBER';
+export const GET_RESULTS = 'GET_RESULTS';
 
 
 //Admin Game actions

@@ -1,4 +1,4 @@
-import { TRACK_QUESTION, CHOOSE_ANSWER, GET_USER_COUNT, OPEN_ROOM, START_GAME, UPDATE_STANDING, ENTER_ROOM, EXIT_ROOM, GET_QUESTION_COUNT, GET_QUESTION_NUMBER, LAST_QUESTION } from './types';
+import { TRACK_QUESTION, CHOOSE_ANSWER, GET_USER_COUNT, OPEN_ROOM, START_GAME, UPDATE_STANDING, ENTER_ROOM, EXIT_ROOM, GET_QUESTION_COUNT, GET_QUESTION_NUMBER, LAST_QUESTION, GET_RESULTS } from './types';
 import firebase from 'firebase';
 
 
@@ -14,6 +14,7 @@ const leave = () => ({type: EXIT_ROOM});
 const getQuestionCount = count => ({type: GET_QUESTION_COUNT, payload: count});
 const trackQuestionNumber = number => ({type: GET_QUESTION_NUMBER, payload: number});
 const lastQuestion = () => ({type: LAST_QUESTION});
+const showResults = (results) => ({type: GET_RESULTS, payload: results});
 
 export const enterRoom = () => dispatch => {
   dispatch(rollCall());
@@ -168,3 +169,11 @@ export const nextQuestion = () => dispatch => {
   })
   .catch(err => console.log('Error switching questions', err));
 };
+
+export const getResults = () => {
+  realTimeDb.ref('/activeGame/activeResponse/choiceCount')
+  .once('value')
+  .then(snapShot => {
+      console.log("snapshot", snapShot);
+  });
+}
