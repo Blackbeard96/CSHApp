@@ -7,7 +7,8 @@ const defaultState = {
   players: 0,
   questionCount: 0,
   idx: -1,
-  lastQuestion: false
+  lastQuestion: false,
+  showResults: false
 };
 
 export default function (state = defaultState, action) {

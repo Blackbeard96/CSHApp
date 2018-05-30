@@ -26,7 +26,8 @@ class Quiz extends Component{
           question = {this.props.question}
           choices = {this.props.choices}
           bulletEnum = {['1', '2', '3', '4']}
-          onChoose = {(val) => {this.props.submitAnswer(val);}}
+          onChoose = {(val) => {
+            this.props.submitAnswer(val);}}
         />
       </View>
     );

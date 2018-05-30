@@ -44,6 +44,12 @@ export const enterRoom = () => dispatch => {
         dispatch(trackQuestionNumber(snapShot.val() + 1));
     });
   })
+  .then(() => {
+    realTimeDb.ref('/activeGame/showResults')
+    .on('value', snapShot => {
+        console.log("snapShot");
+    });
+  })
   .then(() =>
   realTimeDb.ref('/activeGame').child('questionCount').once('value')
   )
@@ -69,11 +75,14 @@ export const exitRoom = () => dispatch => {
 
 };
 
-export const submitAnswer = choice => dispatch => {
+export const submitAnswer = (choice) => dispatch => {
   const currentUser = firebase.auth().currentUser.uid;
   const realTimeDb = firebase.database();
   dispatch(chooseAnswer());
-  realTimeDb.ref('/activeGame/activeQuestion/answer').once('value')
+  realTimeDb.ref('/activeResponse').child(choice).push(currentUser)
+  .then( () => {
+    return realTimeDb.ref('/activeGame/activeQuestion/answer').once('value');
+  })
   .then(snapShot => {
     if (choice != snapShot.val()) {
       realTimeDb.ref('/attendees').child(currentUser).set({inGame: false});
@@ -152,13 +161,10 @@ export const nextQuestion = () => dispatch => {
   .then(questionSnapshot => {
     const question = questionSnapshot.val();
     realTimeDb.ref('/activeGame/activeQuestion').set(question);
-    return question.choices.length;
+    return question.choices;
   })
   .then(amt => {
-    console.log('Amt', amt);
-    let holder = new Array(amt);
-    holder.fill(0);
-    realTimeDb.ref('/activeGame/answersCount').set(holder);
+    realTimeDb.ref('/activeGame/answersCount').set(amt);
   })
   .catch(err => console.log('Error switching questions', err));
 };
