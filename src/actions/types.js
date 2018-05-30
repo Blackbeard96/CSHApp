@@ -33,9 +33,12 @@ export const GET_USER_COUNT = 'GET_USER_COUNT';
 export const ENTER_ROOM = 'ENTER_ROOM';
 export const EXIT_ROOM = 'EXIT_ROOM';
 export const UPDATE_STANDING = 'UPDATE_STANDING';
+export const GET_QUESTION_COUNT = 'GET_QUESTION_COUNT';
+export const GET_QUESTION_NUMBER = 'GET_QUESTION_NUMBER';
 
 
 //Admin Game actions
 export const START_GAME = 'START_GAME';
 export const OPEN_ROOM = 'OPEN_ROOM';
 export const VIEW_STATS = 'VIEW_STATS';
+export const LAST_QUESTION = 'LAST_QUESTION';

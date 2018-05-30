@@ -69,10 +69,13 @@ class Admin extends Component {
     this.setState({visiblePopUp: true});
   }
   closePopUp(canceled) {
+    const { navigate } = this.props.navigation;
+
     this.setState({visiblePopUp: false});
     this.props.clearForms();
     if (!canceled) {
       this.props.beginQuiz();
+      navigate('QuizControl');
     }
   }
 
@@ -93,8 +96,8 @@ className = "menuBox" title = {'Create Quiz'} onPress={() =>
         <PopUp
           visible = {this.state.visiblePopUp}
           acceptText = {'Start Quiz'}
-          onAccept = {() => this.closePopUp(true)}
-          onCancel = {() => this.closePopUp(false)}
+          onAccept = {() => this.closePopUp(false)}
+          onCancel = {() => this.closePopUp(true)}
           >
             <Text> {this.props.selectedTitle} </Text>
           <ListView
