@@ -16,5 +16,20 @@ exports.countAnswers = functions.database.ref(`/activeResponse/{choice}/{userId}
   .then(number => {
     return countRef.set(number);
   });
+});
 
+
+//A function to ask for the results to show 10 seconds after the question is added.
+exports.startTimer = functions.database.ref('/activeGame/activeQuestion/question')
+.onWrite(change => {
+  // Exit when the data is deleted.
+  if (!change.after.exists()) {
+    return null;
+  }
+  return new Promise((resolve, reject) => {
+        setTimeout(function(){
+          //After 10 seconds, show the results of the quiz
+          return change.after.ref.parent.parent.child('showResults').set(true);
+        }, 10000);
+  });
 });
