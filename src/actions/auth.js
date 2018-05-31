@@ -2,7 +2,7 @@ import {LOGIN_ATTEMPT, LOGOUT, SUCCESSFUL_LOGIN, EDIT_FORM, LOGIN_FAIL} from './
 import firebase from 'firebase';
 import {AsyncStorage} from 'react-native';
 
-const login = () => ({type: SUCCESSFUL_LOGIN});
+const login = admin => ({type: SUCCESSFUL_LOGIN, payload: admin});
 const logout = () => ({type: LOGOUT});
 const failedLogin = err => ({type: LOGIN_FAIL, payload: err});
 const inputText = change => ({type: EDIT_FORM, payload: change });
@@ -10,11 +10,19 @@ const inputText = change => ({type: EDIT_FORM, payload: change });
 
 const completeLogin = (dispatch, {email, password}) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
-  .then(() => {
-    dispatch(login());
+  .then(userReturn =>
+    userReturn.uid
+  )
+  .then(uId =>
+    firebase.firestore().collection('Users').doc(`${uId}`)
+    .get()
+  )
+  .then(info => {
+    const isAdmin = info.data().isAdmin || false;
+    return dispatch(login(isAdmin));
   })
   .catch(err => {
-    console.log(err);
+    console.log("Error completing login", err);
     dispatch(failedLogin(err.message));
     }
   );

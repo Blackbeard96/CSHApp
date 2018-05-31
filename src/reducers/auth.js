@@ -4,7 +4,8 @@ const defaultState = {
   password: '',
   loading: false,
   err: '',
-  loggedIn: false
+  loggedIn: false,
+  isAdmin: false
 };
 
 
@@ -15,10 +16,10 @@ export default function (state = defaultState, action) {
     case LOGIN_FAIL:
       return {...state, err:action.payload}
     case LOGOUT:
-      return {...defaultState, loggedIn: false};
+      return defaultState
     case SUCCESSFUL_LOGIN:
-      return {...defaultState, loggedIn: true}
+      return {...defaultState, loggedIn: true, isAdmin: action.payload}
     default:
-      return defaultState;
+      return state;
   }
 }

@@ -1,10 +1,9 @@
-import { TRACK_QUESTION, CHOOSE_ANSWER, GET_USER_COUNT, OPEN_ROOM, START_GAME, UPDATE_STANDING, ENTER_ROOM, EXIT_ROOM, GET_QUESTION_COUNT, GET_QUESTION_NUMBER, LAST_QUESTION, GET_RESULTS, TIME_UP } from './types';
+import { TRACK_QUESTION, CHOOSE_ANSWER, GET_USER_COUNT, OPEN_ROOM, START_GAME, UPDATE_STANDING, ENTER_ROOM, EXIT_ROOM, GET_QUESTION_COUNT, GET_QUESTION_NUMBER, LAST_QUESTION, GET_RESULTS, VIEW_STATS, HIDE_RESULTS } from './types';
 import firebase from 'firebase';
 
 
 const roomOpen = (roomId) => ({type: OPEN_ROOM, payload: roomId});
 const startGame = () => ({type: START_GAME});
-
 const getStanding = inGame => ({type: UPDATE_STANDING, payload: inGame});
 const trackQuestions = (currentQuestion) => ({type: TRACK_QUESTION, payload: currentQuestion});
 const chooseAnswer = () => ({type: CHOOSE_ANSWER});
@@ -14,8 +13,9 @@ const leave = () => ({type: EXIT_ROOM});
 const getQuestionCount = count => ({type: GET_QUESTION_COUNT, payload: count});
 const trackQuestionNumber = number => ({type: GET_QUESTION_NUMBER, payload: number});
 const lastQuestion = () => ({type: LAST_QUESTION});
-const showResults = (results) => ({type: GET_RESULTS, payload: results});
-const timeUp = bool => ({type: TIME_UP, payload: bool});
+const showResults = results => ({type: GET_RESULTS, payload: results});
+const timeUp = val => ({type: VIEW_STATS, payload: val});
+const noShowResults = () => ({type: HIDE_RESULTS});
 
 export const enterRoom = () => dispatch => {
   dispatch(rollCall());
@@ -46,14 +46,14 @@ export const enterRoom = () => dispatch => {
         dispatch(trackQuestionNumber(snapShot.val() + 1));
     });
   })
-  .then(() => {
+  .then(() =>
     realTimeDb.ref('/activeGame/showResults')
     .on('value', snapShot => {
      if (snapShot.val()) {
         dispatch(timeUp(snapShot.val()));
      }
-    });
-  })
+    })
+  )
   .then(() =>
   realTimeDb.ref('/activeGame').child('questionCount').once('value')
   )
@@ -179,5 +179,12 @@ export const getResults = () => dispatch => {
   .once('value')
   .then(snapShot => {
     dispatch(showResults(snapShot.val()));
+  })
+  .catch(err => {
+    console.log('Error getting results', err);
   });
+};
+
+export const hideResults = () => dispatch => {
+  dispatch(noShowResults());
 };

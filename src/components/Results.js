@@ -22,7 +22,7 @@ const ResultPage = (props) => {
         })
       }
     </View>
-  )
+  );
 };
 
 const mapState = ({game}) => {
