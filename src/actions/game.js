@@ -166,6 +166,7 @@ export const beginQuiz = () => dispatch => {
 
 export const nextQuestion = () => dispatch => {
   const realTimeDb = firebase.database();
+
   realTimeDb.ref('/activeGame').once('value')
   .then(snapshot => {
     const {currentQuestionIndex, questionCount} = snapshot.val();
@@ -185,6 +186,9 @@ export const nextQuestion = () => dispatch => {
     const question = questionSnapshot.val();
     realTimeDb.ref('/activeGame/activeQuestion').set(question);
     return question.choices;
+  })
+  .then(() => {
+    realTimeDb.ref('/activeGame/showResults').set(false);
   })
   .then(() => {
     realTimeDb.ref('/activeResponse').remove();
