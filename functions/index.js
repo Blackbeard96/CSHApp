@@ -7,8 +7,8 @@ admin.initializeApp();
 exports.countAnswers = functions.database.ref(`/activeResponse/{choice}/{userId}`)
 .onCreate((snapshot, context) => {
   //If the written datapoint is the counter, do noting
-  if (context.params.userId === 'choiceCount') {return {};}
-  const countRef = snapshot.ref.parent.child('choiceCount');
+  if (context.params.choice === 'choiceCount') {return {};}
+  const countRef = snapshot.ref.parent.parent.child('choiceCount').child(context.params.choice);
   return countRef.once('value')
   .then(snapVal => {
     return snapVal.val() ? snapVal.val() + 1 : 1;
