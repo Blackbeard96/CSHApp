@@ -36,6 +36,7 @@ export const UPDATE_STANDING = 'UPDATE_STANDING';
 export const GET_QUESTION_COUNT = 'GET_QUESTION_COUNT';
 export const GET_QUESTION_NUMBER = 'GET_QUESTION_NUMBER';
 export const GET_RESULTS = 'GET_RESULTS';
+export const TIME_UP = 'TIME_UP';
 
 
 //Admin Game actions

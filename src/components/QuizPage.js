@@ -4,7 +4,7 @@ import {View, Text, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {enterRoom, exitRoom, submitAnswer} from '../actions';
 import {CardSection, PopUp} from './common';
-import {ResultPage} from './ResultPage';
+import Results from './Results';
 
 class Quiz extends Component{
   componentWillMount() {
@@ -32,11 +32,11 @@ class Quiz extends Component{
         />
         <PopUp
           visible = {this.props.showResults}
-          acceptText
-          onAccept
-          onCancel
+          acceptText = ""
+          onAccept = {() => {}}
+          onCancel= {() => {}}
         >
-        <ResultPage />
+        <Results />
         </PopUp>
       </View>
     );
