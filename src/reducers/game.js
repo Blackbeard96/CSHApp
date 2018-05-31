@@ -10,13 +10,14 @@ const defaultState = {
   idx: -1,
   lastQuestion: false,
   showResults: false,
-  results: {}
+  results: {},
+  answered: false
 };
 
 export default function (state = defaultState, action) {
   switch (action.type) {
     case TRACK_QUESTION:
-      return {...state, question: action.payload.question, choices: action.payload.choices, showResults: false};
+      return {...state, question: action.payload.question, choices: action.payload.choices, showResults: false, answered: false};
     case GET_RESULTS:
       return {...state, results: action.payload};
     case VIEW_STATS:
@@ -36,6 +37,7 @@ export default function (state = defaultState, action) {
     case HIDE_RESULTS:
       return {...state, showResults:false}
     case CHOOSE_ANSWER:
+      return {...state, answered:true}
     case ENTER_ROOM:
     default:
       return state;

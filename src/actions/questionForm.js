@@ -1,8 +1,8 @@
-import {EDIT_CHOICE, EDIT_QUESTION, PICK_ANSWER} from './types';
+import {EDIT_CHOICE, EDIT_QUESTION, IDENTIFY_ANSWER} from './types';
 
 const editChoice = ({index, text}) => ({type: EDIT_CHOICE, index, text});
 const editQuestion = text => ({type: EDIT_QUESTION, payload: text});
-const pickAnswer = option => ({type: PICK_ANSWER, payload: option});
+const pickAnswer = option => ({type: IDENTIFY_ANSWER, payload: option});
 
 export const putChoice = (index, text) => dispatch => dispatch(editChoice({index, text}));
 export const putQuestion = text => dispatch => dispatch(editQuestion(text));

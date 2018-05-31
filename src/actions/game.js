@@ -16,6 +16,10 @@ const lastQuestion = () => ({type: LAST_QUESTION});
 const showResults = results => ({type: GET_RESULTS, payload: results});
 const timeUp = val => ({type: VIEW_STATS, payload: val});
 const noShowResults = () => ({type: HIDE_RESULTS});
+const answered = () => ({type: CHOOSE_ANSWER});
+
+
+
 
 export const enterRoom = () => dispatch => {
   dispatch(rollCall());
@@ -85,6 +89,9 @@ export const submitAnswer = (choice) => dispatch => {
   dispatch(chooseAnswer());
   realTimeDb.ref('/activeResponse').child(choice).push(currentUser)
   .then( () => {
+    return dispatch(answered());
+  })
+  .then( () => {
     return realTimeDb.ref('/activeGame/activeQuestion/answer').once('value');
   })
   .then(snapShot => {
@@ -95,13 +102,25 @@ export const submitAnswer = (choice) => dispatch => {
   });
 };
 
+export const getResults = () => dispatch => {
+  const realTimeDb = firebase.database();
+  realTimeDb.ref('/activeResponse/choiceCount')
+  .once('value')
+  .then(snapShot => snapShot.val() || {})
+  .then(results => {
+    dispatch(showResults(results));
+  })
+  .catch(err => {
+    console.log('Error getting results', err);
+  });
+};
 
+//Admin Functions
 const clearActive = () => {
   const realTimeDb = firebase.database();
   realTimeDb.ref('/activeGame').remove();
   realTimeDb.ref('/activeQuestions').remove();
 };
-
 export const openRoom = quizId => dispatch => {
   clearActive();
   const firestoreDb = firebase.firestore();
@@ -171,18 +190,6 @@ export const nextQuestion = () => dispatch => {
     realTimeDb.ref('/activeResponse').remove();
   })
   .catch(err => console.log('Error switching questions', err));
-};
-
-export const getResults = () => dispatch => {
-  const realTimeDb = firebase.database();
-  realTimeDb.ref('/activeResponse/choiceCount')
-  .once('value')
-  .then(snapShot => {
-    dispatch(showResults(snapShot.val()));
-  })
-  .catch(err => {
-    console.log('Error getting results', err);
-  });
 };
 
 export const hideResults = () => dispatch => {

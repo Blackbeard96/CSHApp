@@ -25,6 +25,7 @@ class Quiz extends Component{
           // question = {quizQuestions[0].question}
           // choices = {quizQuestions[0].choices}
           question = {this.props.question}
+          disabled = {this.props.answered}
           choices = {this.props.choices}
           bulletEnum = {['1', '2', '3', '4']}
           onChoose = {(val) => {
@@ -44,9 +45,9 @@ class Quiz extends Component{
 }
 
 const mapState = state => {
-  let {question, choices, players, out, idx, questionCount, showResults} = state.game;
+  let {question, choices, players, out, idx, questionCount, showResults, answered} = state.game;
   let {isAdmin} = state.auth;
-  return {question, choices, players, out, idx, questionCount, showResults, isAdmin};
+  return {question, choices, players, out, idx, questionCount, showResults, isAdmin, answered};
 };
 
 const mapDispatch = {enterRoom, exitRoom, submitAnswer, hideResults};

@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, TouchableHighlight} from 'react-native';
 import {Card, CardSection} from './common';
 
-const Question = ({question, choices, bulletEnum, onChoose}) => {
+const Question = ({question, choices, bulletEnum, onChoose, disabled}) => {
     const {cardStyle, questionTextStyle, questionSectionStyle} = styles;
     if (!bulletEnum) {bulletEnum = ['A', 'B', 'C', 'D']}
     return (
@@ -19,6 +19,7 @@ const Question = ({question, choices, bulletEnum, onChoose}) => {
             key={choice}
             bulletPoint={bulletEnum[idx]}
             text={choice}
+            disabled = {disabled}
             onPress = {onChoose}
           />)
         )
@@ -62,11 +63,15 @@ const styles = {
 };
 export default Question;
 
-const Choice = ({bulletPoint, text, onPress}) => {
+const Choice = ({bulletPoint, text, onPress, disabled}) => {
   const {choiceBulletStyle, choiceStyle, choiceSectionStyle} = styles;
   return (
     <CardSection style={choiceSectionStyle}>
-      <TouchableHighlight onPress = { () => {onPress(text)}} style={{flex: 1}}>
+      <TouchableHighlight
+        onPress = { () => {onPress(text);}}
+        disabled = {disabled}
+        style={{flex: 1}}
+      >
         <View style={choiceStyle}>
         <View style={choiceBulletStyle}>
           <Text>
