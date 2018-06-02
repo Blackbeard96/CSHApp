@@ -1,10 +1,10 @@
 import { TRACK_QUESTION, CHOOSE_ANSWER, GET_USER_COUNT, OPEN_ROOM, START_GAME, UPDATE_STANDING, ENTER_ROOM, EXIT_ROOM, GET_QUESTION_COUNT, GET_QUESTION_NUMBER, LAST_QUESTION, GET_RESULTS, VIEW_STATS, HIDE_RESULTS } from './types';
 import firebase from 'firebase';
 
-
+//Action Creators --> Return actions to update application' global state
 const roomOpen = (roomId) => ({type: OPEN_ROOM, payload: roomId});
 const startGame = () => ({type: START_GAME});
-const getStanding = inGame => ({type: UPDATE_STANDING, payload: inGame});
+const userOut = message => ({type: UPDATE_STANDING, payload: message});
 const trackQuestions = (currentQuestion) => ({type: TRACK_QUESTION, payload: currentQuestion});
 const chooseAnswer = () => ({type: CHOOSE_ANSWER});
 const getUserCount = count => ({type: GET_USER_COUNT, payload: count});
@@ -19,21 +19,33 @@ const noShowResults = () => ({type: HIDE_RESULTS});
 const answered = () => ({type: CHOOSE_ANSWER});
 
 
+/*Functions:
+//All User Functions
+  -enterRoom : Sets listeners for Firebase RealTime database
+  -exitRoom : Updates the RealTime Db so that the user is neither in the game, nor set as a watcher
+  -setUserAsWatcher : Removes the user from being in the game but sets the user as a watcher
+  -getResults : return the amount of users that picked each answer option
 
+//Admin Functions
+  -clearActive: Clears the information for the firebase RealTime Db
+  -openRoom: Allows other users to enter game prior to starting
+  -nextQuestion: Moves to the next question in the quiz
+  -beginQuiz: Starts the quiz; showing first question; users entering after quiz has started will be watchers
+  -hideResults: Allows admin to hide the current result component on personal screen
+*/
 
 export const enterRoom = () => dispatch => {
   dispatch(rollCall());
   const user = firebase.auth().currentUser.uid;
-
   const realTimeDb = firebase.database();
   realTimeDb.ref('/activeGame/started').once('value')
   .then(dataRef => {
     let data = dataRef.val();
     if (data) {
-      realTimeDb.ref('/attendees/' + user).set({inGame: false});
+      realTimeDb.ref('/attendees/watching').child(user).set(true);
     }
     else {
-      realTimeDb.ref('/attendees/' + user).set({inGame: true});
+      realTimeDb.ref('/attendees/inGame').child(user).set(true);
     }
   })
   .then(() => {
@@ -77,10 +89,21 @@ export const enterRoom = () => dispatch => {
 export const exitRoom = () => dispatch => {
   const currentUser = firebase.auth().currentUser.uid;
   const realTimeDb = firebase.database();
-  realTimeDb.ref('/attendees/' + currentUser).remove();
+  realTimeDb.ref('/attendees/inGame').child(currentUser).remove();
+  realTimeDb.ref('/attendees/watching').child(currentUser).set(false);
   realTimeDb.ref('/activeGame/activeQuestion').off();
   dispatch(leave());
+};
 
+const setUserAsWatcher = (currentUser, dispatch) => {
+  const realTimeDb = firebase.database();
+  return realTimeDb.ref('/attendees/inGame').child(currentUser).remove()
+  .then(() => realTimeDb.ref('/attendees/watching').child(currentUser).set(false)
+  )
+  .then(() => {
+    dispatch(userOut('Incorrect!'));
+  })
+  .catch(err => console.log('Error setting user as watcher: ', err));
 };
 
 export const submitAnswer = (choice) => dispatch => {
@@ -95,10 +118,13 @@ export const submitAnswer = (choice) => dispatch => {
     return realTimeDb.ref('/activeGame/activeQuestion/answer').once('value');
   })
   .then(snapShot => {
-    if (choice != snapShot.val()) {
-      realTimeDb.ref('/attendees').child(currentUser).set({inGame: false});
-      getStanding(false);
+    if (choice !== snapShot.val()) {
+      setUserAsWatcher(currentUser, dispatch);
     }
+  })
+  .catch(err => {
+    setUserAsWatcher(currentUser, dispatch);
+    console.log('Error submitting Response: ', err);
   });
 };
 
@@ -120,6 +146,8 @@ const clearActive = () => {
   const realTimeDb = firebase.database();
   realTimeDb.ref('/activeGame').remove();
   realTimeDb.ref('/activeQuestions').remove();
+  realTimeDb.ref('/attendees').remove();
+
 };
 export const openRoom = quizId => dispatch => {
   clearActive();
@@ -148,20 +176,13 @@ export const openRoom = quizId => dispatch => {
       );
     });
   })
+  .then(() => dispatch(roomOpen())
+  )
   .catch(err => {
     console.log('Error opening room', err);
     clearActive();
 
   });
-};
-
-export const beginQuiz = () => dispatch => {
-  const realTimeDb = firebase.database();
-  realTimeDb.ref('/activeGame').update({started: true})
-  .then(
-    nextQuestion()
-  )
-  .catch(err => console.log('Error starting Quiz', err));
 };
 
 export const nextQuestion = () => dispatch => {
@@ -194,6 +215,17 @@ export const nextQuestion = () => dispatch => {
     realTimeDb.ref('/activeResponse').remove();
   })
   .catch(err => console.log('Error switching questions', err));
+};
+
+export const beginQuiz = () => dispatch => {
+  const realTimeDb = firebase.database();
+  realTimeDb.ref('/activeGame').update({started: true})
+  .then(
+    nextQuestion()
+  )
+  .then(() => dispatch(startGame())
+  )
+  .catch(err => console.log('Error starting Quiz', err));
 };
 
 export const hideResults = () => dispatch => {

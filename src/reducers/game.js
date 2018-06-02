@@ -11,7 +11,8 @@ const defaultState = {
   lastQuestion: false,
   showResults: false,
   results: {},
-  answered: false
+  answered: false,
+  message: ''
 };
 
 export default function (state = defaultState, action) {
@@ -23,7 +24,7 @@ export default function (state = defaultState, action) {
     case VIEW_STATS:
       return {...state, showResults: action.payload};
     case UPDATE_STANDING:
-      return {...state, out: true};
+      return {...state, out: true, message: action.payload};
     case GET_USER_COUNT:
       return {...state, players: action.payload};
     case GET_QUESTION_COUNT:
