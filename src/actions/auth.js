@@ -2,10 +2,22 @@ import {LOGIN_ATTEMPT, LOGOUT, SUCCESSFUL_LOGIN, EDIT_FORM, LOGIN_FAIL} from './
 import firebase from 'firebase';
 import {AsyncStorage} from 'react-native';
 
+
+//Action Creator
 const login = admin => ({type: SUCCESSFUL_LOGIN, payload: admin});
 const logout = () => ({type: LOGOUT});
 const failedLogin = err => ({type: LOGIN_FAIL, payload: err});
 const inputText = change => ({type: EDIT_FORM, payload: change });
+
+
+/*
+Functions
+-completeLogin: signs a user in with firebase authorization
+-userLogin: calls completeLogin with data inserted into the AuthForm component and saves that data to the device's local storage
+-autoLogin: calls completeLogin with data saved in the Device's local storage
+-isLoggedIn: returns a boolean representing wether a user is logged in or not
+-userLogout: logs a user out of the app
+*/
 
 
 const completeLogin = (dispatch, {email, password}) => {

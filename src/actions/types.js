@@ -1,3 +1,8 @@
+/*
+Action Types
+*/
+
+
 
 //auth actions
 export const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
