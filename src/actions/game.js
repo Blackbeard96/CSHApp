@@ -27,11 +27,12 @@ const answered = () => ({type: CHOOSE_ANSWER});
   -getResults : return the amount of users that picked each answer option
 
 //Admin Functions
-  -clearActive: Clears the information for the firebase RealTime Db
+  -clearActive: resets the firebase realTime db to empty
   -openRoom: Allows other users to enter game prior to starting
   -nextQuestion: Moves to the next question in the quiz
   -beginQuiz: Starts the quiz; showing first question; users entering after quiz has started will be watchers
   -hideResults: Allows admin to hide the current result component on personal screen
+  -getWinners: Displays a list of users still in the game
 */
 
 export const enterRoom = () => dispatch => {
@@ -146,6 +147,7 @@ const clearActive = () => {
   const realTimeDb = firebase.database();
   realTimeDb.ref('/activeGame').remove();
   realTimeDb.ref('/activeQuestions').remove();
+  realTimeDb.ref('/activeResponse').remove();
   realTimeDb.ref('/attendees').remove();
 
 };
@@ -231,3 +233,19 @@ export const beginQuiz = () => dispatch => {
 export const hideResults = () => dispatch => {
   dispatch(noShowResults());
 };
+
+export const getWinners = () => dispatch => {
+  const realTimeDb = firebase.database();
+  return realTimeDb.ref('/attendees/inGame')
+  .once('value')
+  .then(snapShot => snapShot.val() || null)
+  .then(winners => Object.keys(winners)
+  )
+  .then(users => users.map(user => {
+    //look through firestoredatabase and get user names based on the userId's
+    return user;
+  }))
+  .then(userNames => console.log("these are thier names",userNames))
+  .catch(err => console.log('Error retrieving winners', err));
+}
+;
